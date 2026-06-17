@@ -38,15 +38,15 @@ python -m pip install -r requirements.txt
 Generate the HTML outputs:
 
 ```bash
-python md2html.py
-python md2html_easy.py
+python build_manuscript_html.py
+python build_popular_summary_html.py
 ```
 
 On Windows, if `python` is not on PATH, use:
 
 ```bash
-py md2html.py
-py md2html_easy.py
+py build_manuscript_html.py
+py build_popular_summary_html.py
 ```
 
 ## Notes
