@@ -8,6 +8,7 @@ __pycache__/
 chat-history.md
 review.md
 openspec/
+.github/
 
 # Intermediate extraction artifacts
 pdf_extracted.txt
@@ -15,6 +16,51 @@ pdf_output.txt
 
 # Reference PDFs not authored in this repo
 Dragan_2020_New_J._Phys._22_033038.pdf
+
+# Unrelated or superseded manuscript variants
+deepArticle.md
+deepArticle.html
+Black Holes, Gravitational Waves, and the Hypothesis of Superluminal Observers.pdf
+GEMINI.TXT
+
+# Unrelated exploratory analyses
+c_transformation_derivation.py
+c_transformation_results.txt
+delta_neff_scan.py
+delta_neff_results.csv
+radiative_stability.py
+radiative_stability_results.txt
+superselection_analysis.py
+superselection_results.txt
+theta_1p3d_phase.py
+theta_1p3d_results.png
+theta_dynamics.py
+theta_dynamics_results.csv
+theta_dynamics_results.png
+theta_phase_1p1d.py
+theta_phase_results.txt
+
+# TOV exploration scripts and intermediate outputs not needed in the public release
+diag_tov.py
+extended_sweep_v2.py
+full_sweep.py
+tov_chi_sector.py
+tov_chi_sector_plot.png
+tov_chi_sector_plot_summary.png
+tov_chi_sector_results.csv
+tov_consistency_plot.png
+tov_eos_sensitivity.py
+tov_eos_sensitivity.csv
+tov_eos_sensitivity.png
+tov_eos_sweep.py
+tov_eos_sweep_plot.png
+tov_eos_sweep_results.csv
+tov_physical.py
+tov_physical_plot.png
+tov_physical_results.csv
+tov_selfconsistent_check.py
+tov_tidal_results_old.csv
+verify_tov.py
 
 # OS/editor noise
 .DS_Store
