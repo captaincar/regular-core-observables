@@ -62,6 +62,21 @@ The badge above points to the Zenodo concept DOI:
 The concept DOI is a stable project-level landing page. The version DOI refers
 to this exact archived release.
 
+BibTeX:
+
+```bibtex
+@software{sasadeusz_regular_core_observables_2026,
+	author    = {Sasadeusz, Rafal},
+	title     = {Regular Core Observables},
+	version   = {v1.0.1},
+	year      = {2026},
+	month     = jun,
+	publisher = {Zenodo},
+	doi       = {10.5281/zenodo.20737352},
+	url       = {https://doi.org/10.5281/zenodo.20737352}
+}
+```
+
 ## Notes
 
 - The manuscript is a phenomenological study. It does **not** derive the regular core from a microphysical theory.
