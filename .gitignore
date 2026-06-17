@@ -1,0 +1,21 @@
+.math_cache/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Local workflow and review artifacts
+chat-history.md
+review.md
+openspec/
+
+# Intermediate extraction artifacts
+pdf_extracted.txt
+pdf_output.txt
+
+# Reference PDFs not authored in this repo
+Dragan_2020_New_J._Phys._22_033038.pdf
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
