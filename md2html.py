@@ -1,6 +1,6 @@
 import re
 
-with open(r'd:\DEV\fizyka\finalArticle.md', 'r', encoding='utf-8') as f:
+with open(r'd:\DEV\fizyka\manuscript.md', 'r', encoding='utf-8') as f:
     md = f.read()
 
 lines = md.split('\n')
@@ -253,7 +253,7 @@ ol, ul {{
 </body>
 </html>'''
 
-with open(r'd:\DEV\fizyka\finalArticle.html', 'w', encoding='utf-8') as f:
+with open(r'd:\DEV\fizyka\manuscript.html', 'w', encoding='utf-8') as f:
     f.write(html)
 
-print(f'HTML written to finalArticle.html ({len(html)} bytes)')
+print(f'HTML written to manuscript.html ({len(html)} bytes)')

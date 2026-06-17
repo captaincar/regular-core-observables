@@ -1,6 +1,6 @@
 import re
 
-with open(r'd:\DEV\fizyka\easyArticle.md', 'r', encoding='utf-8') as f:
+with open(r'd:\DEV\fizyka\popular-summary.md', 'r', encoding='utf-8') as f:
     md = f.read()
 
 lines = md.split('\n')
@@ -240,7 +240,7 @@ ol, ul {{
 </body>
 </html>'''
 
-with open(r'd:\DEV\fizyka\easyArticle.html', 'w', encoding='utf-8') as f:
+with open(r'd:\DEV\fizyka\popular-summary.html', 'w', encoding='utf-8') as f:
     f.write(html)
 
-print(f'HTML written to easyArticle.html ({len(html)} bytes)')
+print(f'HTML written to popular-summary.html ({len(html)} bytes)')

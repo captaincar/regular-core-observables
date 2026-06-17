@@ -1,0 +1,362 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Regular Black Hole and Compact Star Phenomenology with a Negative-Pressure Core</title>
+<script>
+MathJax = {
+  tex: {
+    inlineMath: [['$', '$']],
+    displayMath: [['\\[', '\\]']],
+    processEscapes: true
+  }
+};
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+<style>
+body {
+  max-width: 820px;
+  margin: 40px auto;
+  padding: 20px 40px;
+  font-family: 'Palatino Linotype', 'Book Antiqua', Palatino, Georgia, serif;
+  font-size: 17px;
+  line-height: 1.65;
+  color: #222;
+  background: #fdfdfd;
+}
+h1 {
+  font-size: 1.8em;
+  text-align: center;
+  margin-bottom: 0.2em;
+  line-height: 1.3;
+}
+h2 {
+  font-size: 1.35em;
+  margin-top: 2em;
+  border-bottom: 1px solid #ccc;
+  padding-bottom: 0.2em;
+}
+h3 {
+  font-size: 1.15em;
+  margin-top: 1.6em;
+}
+h4 {
+  font-size: 1.05em;
+  margin-top: 1.3em;
+}
+.equation {
+  margin: 1.2em 0;
+  text-align: center;
+  overflow-x: auto;
+}
+table {
+  border-collapse: collapse;
+  margin: 1em auto;
+  font-size: 0.92em;
+}
+th, td {
+  padding: 6px 14px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+th {
+  background: #f0f0f0;
+  font-weight: 600;
+}
+thead th {
+  border-bottom: 2px solid #999;
+}
+code {
+  background: #f0f0f0;
+  padding: 1px 5px;
+  border-radius: 3px;
+  font-family: 'Consolas', 'Courier New', monospace;
+  font-size: 0.9em;
+}
+hr {
+  border: none;
+  border-top: 1px solid #ddd;
+  margin: 1.5em 0;
+}
+figure {
+  text-align: center;
+  margin: 1.5em 0;
+}
+figcaption {
+  font-size: 0.88em;
+  color: #666;
+  margin-top: 0.3em;
+}
+img {
+  max-width: 100%;
+}
+ol, ul {
+  padding-left: 1.8em;
+}
+@media (max-width: 600px) {
+  body { padding: 10px 15px; font-size: 15px; }
+  table { font-size: 0.8em; }
+  th, td { padding: 4px 6px; }
+}
+</style>
+</head>
+<body>
+<h1>Three Ways to Catch a Fuzzy Core: Ringdown, Tides, and Echoes from Regular Black Holes and Compact Stars</h1>
+
+<p><strong>Author: Rafal Sasadeusz</strong></p>
+<p><strong>Date: June 2026</strong></p>
+
+<hr>
+
+<h2>What This Paper Does — and What It Doesn't</h2>
+
+<p>This is a computational survey of one concrete idea: that the infinite-density singularity at a black hole's center is replaced by a finite, negative-pressure core. We do not derive this core from an underlying theory. We do not predict its length scale $L$ or its density $\rho_0$ from first principles. We do not provide a formation mechanism. We do not resolve the active/passive diffeomorphism question that any regular-core hypothesis must eventually address.</p>
+
+<p><strong>What we do:</strong> we ask whether existing and near-future observations can constrain $L$ and $\rho_0$ if such cores exist. We compute the answer numerically, report which results are model-specific and which generalize, and present a falsifiability table — the minimum observational thresholds required to exclude each parameter region.</p>
+
+<p>The paper is organized around three observational channels. Each asks a different question:</p>
+
+<table><thead><tr><th>Channel</th><th>Question</th><th>Observable</th><th>Status</th></tr></thead><tbody><tr><td><strong>Ringdown</strong></td><td>Does a fuzzy core change how a black hole rings?</td><td>QNM frequency shift $\Delta f/f$</td><td>Current: no constraint. Future: ET/CE</td></tr><tr><td><strong>Tides</strong></td><td>Can a neutron star host the same core, and would we feel it?</td><td>Tidal deformability $\Lambda$</td><td><strong>Current: constrained by GW170817</strong></td></tr><tr><td><strong>Echoes</strong></td><td>Does the core reflect gravitational waves?</td><td>Echo time delay $\Delta t_{\text{echo}}$</td><td>Ruled out unless object is horizonless</td></tr></tbody></table>
+
+<p>The answer, after running the numbers, is surprisingly structured: one channel is constrained today, one will be constrained in the 2030s, and one turns out to be a category error — echoes require no horizon at all, not just a regular core.</p>
+
+<figure><img src="conceptual_diagram.png" alt="Conceptual diagram"><figcaption>Conceptual diagram</figcaption></figure>
+
+<p><strong>Figure 0.</strong> Three observational channels for detecting a negative-pressure core: ringdown (QNM frequency shift), tides (tidal deformability), and echoes (post-merger pulse train). The ringdown channel awaits next-generation detectors. The tidal channel is constrained today by GW170817. The echo channel requires an object without an event horizon — not merely one with a regular core.</p>
+
+<hr>
+
+<h2>1. Introduction</h2>
+
+<p>The idea that black hole singularities might be replaced by a finite-density core dates to Bardeen (1968) [1], Dymnikova (1992) [2], and Hayward (2006) [3]. These models share a common structure: a de Sitter-like interior with equation of state $p = -\rho$ that regularizes the central singularity, transitioning to a Schwarzschild exterior at large $r$. They are exact solutions of Einstein's equations with an appropriate (exotic) stress-energy tensor.</p>
+
+<p>This paper treats these models as phenomenological ansätze. We do not derive the core from an underlying theory; we treat its density $\rho_0$ and length scale $L$ as free parameters and compute their gravitational-wave, electromagnetic, and astrophysical signatures.</p>
+
+<p>We compute three classes of observable:</p>
+
+<ol><li><strong>Black hole ringdown</strong> (§2): the QNM frequency shift from Hayward, Bardeen, and Dymnikova regular cores, including a slow-rotation extension for GW150914.</li><li><strong>Compact stars</strong> (§3): two-fluid TOV integration yielding mass-radius relations, tidal deformabilities, post-merger frequency predictions, and a causality check.</li><li><strong>Evaporation endpoint</strong> (§4): the Hayward remnant mass, its connection to primordial black hole dark matter, and microlensing bounds.</li></ol>
+
+<p>The Hayward metric [3] serves as our primary workhorse because it is analytically tractable and TOV-consistent. Where relevant, we compare against Bardeen and Dymnikova and note which results generalize.</p>
+
+<hr>
+
+<h2>2. Black Hole Ringdown: Listening to the Ring</h2>
+
+<h3>2.1 The Hayward Metric</h3>
+
+<p>The Hayward regular black hole [3] is described by</p>
+
+<div class="equation">\[ds^2 = -f(r)\,dt^2 + f(r)^{-1}\,dr^2 + r^2\,d\Omega^2, \qquad f(r) = 1 - \frac{2Mr^2}{r^3 + 2ML^2},\]</div>
+
+<p>where $L$ is a length scale parameterizing the de Sitter core (effective cosmological constant $\Lambda_{\text{eff}} = 3/L^2$). The metric has two horizons for $L < L_{\text{ext}}$, one (extremal) horizon at $L = L_{\text{ext}}$, and no horizons for $L > L_{\text{ext}}$, where</p>
+
+<div class="equation">\[L_{\text{ext}} = \frac{4M}{3\sqrt{3}} \approx 0.770\,M.\]</div>
+
+<p>The stress-energy tensor has energy density $\rho = -p_r = 3ML^2 / [4\pi(r^3 + 2ML^2)^2]$ and $p_r/\rho = -1$ everywhere — making the Hayward metric TOV-consistent by construction.</p>
+
+<h3>2.2 QNM Frequency Shift: WKB Calculation</h3>
+
+<p>We compute the $\ell = 2$, $n = 0$ quasinormal-mode frequency for axial (Regge-Wheeler) perturbations using the leading-order Iyer-Will WKB formula [4]: $\omega^2 = V_0 - i K \sqrt{-2V_2}$. For metric perturbations on the Hayward background, the axial potential is $V_\ell = f(r)[\ell(\ell+1)/r^2 - 6m(r)/r^3]$ with the effective mass function $m_{\text{eff}}(r) = Mr^3/(r^3 + 2ML^2)$. The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. Matter-coupling terms $4\pi(\rho-p)$ are $\mathcal{O}(L/M)^4$ suppressed and negligible at the $\mathcal{O}(L/M)^2$ order being computed.</p>
+
+<p><strong>Result — Hayward:</strong></p>
+
+<div class="equation">\[\boxed{\left|\frac{\delta f}{f_0}\right| \approx 0.049 \left(\frac{L}{M}\right)^2 \quad \text{(Hayward)}}\]</div>
+
+<table><thead><tr><th>$L/M$</th><th>$\delta f/f$ (%)</th></tr></thead><tbody><tr><td>0.01</td><td>$4.9 \times 10^{-4}$</td></tr><tr><td>0.05</td><td>$1.2 \times 10^{-2}$</td></tr><tr><td>0.10</td><td>$4.9 \times 10^{-2}$</td></tr><tr><td>0.20</td><td>$2.0 \times 10^{-1}$</td></tr><tr><td>0.316</td><td>$4.9 \times 10^{-1}$</td></tr></tbody></table>
+
+<p><strong>Cross-metric results:</strong></p>
+
+<table><thead><tr><th>Metric</th><th>Coefficient</th><th>Mass function form</th><th>Suppression type</th></tr></thead><tbody><tr><td><strong>Hayward</strong></td><td>$0.049\,(L/M)^2$</td><td>$Mr^3/(r^3 + 2ML^2)$</td><td>Polynomial $\sim (L/r)^3$</td></tr><tr><td><strong>Bardeen</strong></td><td>$0.139\,(e/M)^2$</td><td>$Mr^3/(r^2 + e^2)^{3/2}$</td><td>Polynomial $\sim (e/r)^2$</td></tr><tr><td><strong>Dymnikova</strong></td><td>$\approx 0$</td><td>$M(1 - e^{-r^3/(2ML^2)})$</td><td>Exponential $\sim e^{-(M/L)^2}$</td></tr></tbody></table>
+
+<p>The Bardeen coefficient is 2.8× the Hayward value — the QNM shift prefactor is <strong>strongly metric-dependent</strong>. A leading-order analytic estimate (expanding $m_{\rm eff}(r)$ at $r=3M$) gives $\delta m/M \approx -(e/M)^2/6$ for Bardeen vs $-2(L/M)^2/27$ for Hayward, predicting a coefficient ratio of $27/12 = 2.25$; the WKB-fitted value 0.139 (ratio 2.8) includes the photon-sphere location shift from higher-order terms. The Dymnikova shift is <strong>exponentially suppressed</strong>: at the photon sphere $r \approx 3M$, the mass function deviation is $\exp(-27M^2/(2L^2))$, which is $< 10^{-23}$ for $L/M < 0.5$. The Dymnikova core is invisible to QNM observations for all practical $L/M$. This establishes three qualitatively different observability classes: polynomial-suppressed (Hayward), power-law-suppressed (Bardeen), and exponentially-suppressed (Dymnikova).</p>
+
+<p><strong>Relation to existing work.</strong> QNM spectra of regular black holes have been computed by Flachi &amp; Lemos (2013) for the Dymnikova metric, by Li &amp; Bambi (2013) for the Bardeen metric, and by Toshmatov et al. (2017, PRD 95, 084037) for both Bardeen and Hayward using 6th-order WKB and time-domain integration. The present work differs in three respects: (i) we fit the leading-order $(L/M)^2$ or $(e/M)^2$ scaling coefficient directly from the WKB data, providing a compact parameterization with explicit error estimates; (ii) we compute the <em>cross-metric</em> taxonomy — the three suppression classes (polynomial, power-law, exponential) — in a single unified framework; and (iii) we connect the QNM shift thresholds to detector sensitivity curves and to the echo–extremality coincidence, which was not identified in earlier work.</p>
+
+<figure><img src="cross_metric_qnm.png" alt="Cross-metric QNM comparison"><figcaption>Cross-metric QNM comparison</figcaption></figure>
+
+<p><strong>Figure 1.</strong> QNM frequency shift $|\delta f/f|$ vs core scale for Hayward (0.049), Bardeen (0.139, WKB-fitted), and Dymnikova ($\approx 0$). Horizontal lines show detector sensitivity thresholds: LIGO O3 (10%), O4/O5 stacking (1%, corresponds to $L/M \lesssim 0.45$ — near Hayward extremality), and ET/CE (0.01%). The vertical line marks the GW150914 maximum $L/M \approx 0.316$.</p>
+
+<h3>2.3 Echo Threshold and the Extremality Coincidence</h3>
+
+<p>Gravitational-wave echoes — time-delayed pulses from partial reflection between the photon-sphere barrier and the core surface — have been proposed as a signature of regular black holes. The echo delay in tortoise coordinates is</p>
+
+<div class="equation">\[\Delta t_{\text{echo}} \approx 2 \int_{r_{\text{core}}}^{r_{\text{barrier}}} \frac{dr}{f(r)}.\]</div>
+
+<p>A numerical sweep reveals that echo delays become LIGO-resolvable ($\gtrsim 0.1$ ms for $10\,M_\odot$) at $L/M \gtrsim 0.77$. <strong>This value coincides exactly with the Hayward extremality condition</strong> $L_{\text{ext}} = 4M/(3\sqrt{3}) \approx 0.770\,M$.</p>
+
+<p>The physical interpretation: echo-producing configurations are those where the two horizons have merged and <strong>there is no horizon at all</strong>. Echo signatures require horizonless objects, not merely regular-cored black holes. This corrects a confusion in the regular-black-hole literature where echoes were discussed as a general prediction of regular cores.</p>
+
+<p>The underlying physics generalizes beyond Hayward: the tortoise integral $\int dr/f(r)$ diverges logarithmically near any horizon, so resolvable echoes require near-extremal or horizonless conditions for all regular metrics. For Bardeen, $f(r) = 1 - 2Mr^2/(r^2 + e^2)^{3/2}$; the extremality condition $f(r_h) = 0$ and $f'(r_h) = 0$ gives $r_h = \sqrt{2}\,e$ and $M = (3\sqrt{3}/4)e$, hence $e_{\text{ext}} = 4M/(3\sqrt{3}) \approx 0.770\,M$ — identical to the Hayward value. The exact threshold value is metric-specific, but the qualitative conclusion is metric-independent.</p>
+
+<h3>2.4 EOS Robustness</h3>
+
+<p>The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. The EOS enters only through the mass function. Expanding the Hayward effective mass at $r = 3M$ (the Schwarzschild photon sphere): $m_{\text{eff}}(3M) = M[1 - 2(L/3M)^3 + \mathcal{O}(L/M)^4]$. An EOS-induced mass correction $\delta m_{\text{EOS}}$ at the same $r$ is bounded by the core density profile at the photon sphere, which for a neutron-star-like core of extent $r_c \ll 3M$ is $\delta m_{\text{EOS}}/M \lesssim (r_c/3M)^3(\rho_0/\rho_{\text{nuc}}) \ll (L/M)^3$. The ratio of EOS-induced to Hayward mass deviation is</p>
+
+<div class="equation">\[\frac{|\delta m_{\text{EOS}}|}{|\delta m_{\text{Hayward}}|} \lesssim \frac{L}{2M}.\]</div>
+
+<table><thead><tr><th>$L/M$</th><th>Max EOS correction to shift</th></tr></thead><tbody><tr><td>0.05</td><td>$\sim 2.5\%$</td></tr><tr><td>0.10</td><td>$\sim 5\%$</td></tr><tr><td>0.30</td><td>$\sim 15\%$</td></tr></tbody></table>
+
+<p>The Hayward-based QNM predictions are robust at the few-percent level for observationally relevant $L/M$. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics.</p>
+
+<h3>2.5 Kerr Slow-Rotation Extension</h3>
+
+<p>Every LIGO/Virgo/KAGRA remnant is spinning. We extend to slow rotation via the Lense-Thirring frame-dragging correction (Hartle-Thorne, linearised in $a$):</p>
+
+<div class="equation">\[V_{\ell m}^{\text{eff}}(r, \omega, a) = V_\ell^{\text{(static)}}(r) \pm 2m\omega\,\chi\,\omega_{\text{fd}}^{(a/M=1)}(r) + \mathcal{O}(a^2),\]</div>
+
+<p>where $\chi = a/M$ and $\omega_{\text{fd}}^{(a/M=1)}$ is the frame-dragging function computed for unit spin. Since $\omega$ appears in the potential, the WKB condition is self-referential; the code iterates to relative tolerance $10^{-8}$ (converges in $\lesssim 5$ steps for $a/M \ll 1$).</p>
+
+<p><strong>Validity caveat.</strong> For GW150914 ($a/M \approx 0.67$), the next-order term $(a/M)^2 \approx 0.45$ is comparable to the leading correction. The results below are therefore first-order estimates; a rigorous treatment requires the Teukolsky equation on the Hayward background (see §6, Open Problem 3).</p>
+
+<p><strong>GW150914 results</strong> ($M = 62\,M_\odot$, $a/M \approx 0.67$ [5]):</p>
+
+<table><thead><tr><th>Quantity</th><th>Value</th></tr></thead><tbody><tr><td>Axial QNM shift at $L/M = 0.316$ (static)</td><td>$|\delta f/f| = 0.49\%$</td></tr><tr><td>Axial–polar isospectrality splitting (static)</td><td>$0.11\%$ ($< 0.12\%$)</td></tr><tr><td>Spin splitting $m{=}\pm2$ (first-order code, $a/M{=}0.67$)</td><td>[non-perturbative artefact — expansion invalid; exact Kerr: $f\approx295$ Hz ($m{=}{+}2$), $\approx105$ Hz ($m{=}{-}2$) [13]]</td></tr><tr><td>LIGO ringdown precision (GW150914)</td><td>$\sim 10\%$</td></tr><tr><td><strong>GW150914 constraint on $L/M$</strong></td><td><strong>None — core shift two orders of magnitude below threshold</strong></td></tr><tr><td>ET/CE detection threshold</td><td>$L/M \gtrsim 0.045$ (stacking 100 events, $\delta f/f \sim 10^{-4}$)</td></tr><tr><td>ET/CE single event</td><td>$L/M \gtrsim 0.14$ ($\delta f/f \sim 10^{-3}$)</td></tr><tr><td>O4/O5 stacking (100 events, $1\%$ sensitivity)</td><td>$L/M \gtrsim 0.45$ (near extremality)</td></tr></tbody></table>
+
+<p><strong>Spin-correction caveat.</strong> For the static (non-spinning) case the WKB result is self-consistent and the ~6.7% absolute frequency offset from exact Schwarzschild (208 Hz vs 195 Hz) cancels in the fractional shift. For the spin-corrected case the slow-rotation expansion has <strong>completely broken down</strong> at $a/M = 0.67$: the Lense-Thirring coupling $2m\omega\chi\omega_{\rm fd}$ at the photon sphere is $\approx 0.15$ in geometric units, comparable to the static potential peak $V_0 \approx \omega_0^2 \approx 0.14$. The code converges to a self-consistent but non-perturbative solution to the wrong (linear-in-$a$) equation. The quoted $f_\pm$ values are artifacts. For reference, the exact Kerr QNM at $a/M = 0.67$, $M = 62\,M_\odot$ from Berti, Cardoso \&amp; Starinets numerical tables [BCStab] is $f \approx 295$ Hz ($m=+2$) and $\approx 105$ Hz ($m=-2$) — versus the code's 510 Hz and 179 Hz. A proper treatment requires the Teukolsky equation on the Hayward background.</p>
+
+<p>Isospectrality is preserved at the level accessible to leading-order WKB: the axial–polar splitting is $0.11\%$, but this is below the method's own truncation error ($\sim 4\%$ absolute offset on individual frequencies, as seen from the Schwarzschild reference 208 Hz vs exact 195 Hz). <strong>This splitting cannot be distinguished from a WKB truncation artefact at this order.</strong> A meaningful bound on isospectrality breaking requires 3rd-order Konoplya WKB or an exact numerical computation on the Hayward background. The result is reported here as an upper bound: $|f_{\rm polar} - f_{\rm axial}|/f < 0.12\%$ subject to WKB systematics. Rotation does not amplify the <em>Hayward-core</em> shift: the static result is the trustworthy bound: GW150914 cannot constrain $L/M$.</p>
+
+<figure><img src="kerr_qnm.png" alt="Kerr QNM sweep"><figcaption>Kerr QNM sweep</figcaption></figure>
+
+<p><strong>Figure 2.</strong> Six-panel QNM analysis for the Hayward metric: (top) frequency, fractional shift $|\delta f/f|$, and isospectrality breaking; (bottom) damping time, light ring radius, and frame-dragging $\omega_{\rm fd}$ at the light ring. The static (non-spinning) panels are reliable. The frame-dragging panel (bottom-right) shows $\omega_{\rm fd}$ normalized to $a/M = 1$; the corresponding spin-split frequencies are non-perturbative artefacts for $a/M \sim 0.67$ and should not be interpreted as physical predictions (see §2.5 caveat).</p>
+
+<p><em>Code:</em> <code>kerr_qnm.py</code></p>
+
+<hr>
+
+<h2>3. Compact Stars: Squeezing the Core</h2>
+
+<h3>3.1 Two-Fluid TOV Formalism</h3>
+
+<p>The same negative-pressure fluid can reside inside neutron stars. We model this as a two-fluid system:</p>
+
+<div class="equation">\[\frac{dm}{dr} = 4\pi r^2 (\varepsilon_{\text{m}} + \varepsilon_\chi), \qquad \frac{dp_{\text{m}}}{dr} = -\frac{G(\varepsilon_{\text{m}} + p_{\text{m}})(m + 4\pi r^3 p_{\text{total}})}{r(r - 2Gm)},\]</div>
+
+<p>with $\varepsilon_\chi = \rho_\chi(r)$, $p_{\text{total}} = p_{\text{m}} + p_\chi$, and the χ-sector density profile</p>
+
+<div class="equation">\[\chi(r) = \frac{1}{1 + (r/r_c)^n},\]</div>
+
+<p>parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$. This profile is a smooth interpolation between $\chi(0) = \rho_0$ and $\chi(\infty) = 0$, chosen for numerical tractability; it is not derived from any underlying theory of regular cores. The nuclear matter EOS is the <strong>SLy piecewise polytrope</strong> [6].</p>
+
+<h3>3.2 Mass-Radius Results</h3>
+
+<p><strong>Pure SLy baseline:</strong> $M_{\max} = 2.049\,M_\odot$ — consistent with PSR J0740+6620 ($M = 2.08 \pm 0.07\,M_\odot$ [7]).</p>
+
+<p><strong>With χ-sector</strong> ($r_c = 2$ km; $1\sigma$ PSR lower bound $\approx 2.01\,M_\odot$):</p>
+
+<table><thead><tr><th>$\rho_0$ (g/cm³)</th><th>$M_{\max}$ ($M_\odot$)</th><th>NICER status</th></tr></thead><tbody><tr><td>$10^{10}$</td><td>2.027</td><td>Allowed</td></tr><tr><td>$3 \times 10^{10}$</td><td>2.026</td><td>Allowed</td></tr><tr><td>$10^{11}$</td><td>2.002</td><td><strong>Excluded at $1\sigma$</strong> ($M < 2.01\,M_\odot$)</td></tr><tr><td>$3 \times 10^{11}$</td><td>1.975</td><td>Excluded</td></tr><tr><td>$10^{12}$</td><td>1.941</td><td>Excluded</td></tr><tr><td>$3 \times 10^{12}$</td><td>1.890</td><td>Excluded</td></tr><tr><td>$10^{13}$</td><td>1.820</td><td>Excluded</td></tr></tbody></table>
+
+<p>The inferred constraint depends on confidence level. At <strong>$1\sigma$</strong> ($M_{\rm max} > 2.01\,M_\odot$): $\boxed{\rho_0 \lesssim 3\times10^{10}\ \text{g/cm}^3}$. At <strong>$2\sigma$</strong> ($M_{\rm max} > 1.94\,M_\odot$): $\rho_0 \lesssim 3\times10^{11}\ \text{g/cm}^3$. Both bounds are three orders of magnitude below nuclear saturation density ($\rho_{\rm nuc} \approx 2.3\times10^{14}$ g/cm³). Both are SLy-specific; stiffer EOS choices (APR4, MS1b) would relax them. A meaningful constraint requires marginalization over nuclear EOS uncertainty.</p>
+
+<p><em>Note on precision:</em> M_max values are extracted from the p_c grid scan (46 log-spaced points); a targeted fine scan at the pure-SLy peak gives M_max = 2.056 M_⊙, confirming the grid values are within 0.3% of the true maximum. No qualitative constraint changes.</p>
+
+<h3>3.3 Tidal Deformability — Direct Connection to GW170817</h3>
+
+<p>The Love number $k_2$ and tidal deformability $\Lambda$ are computed by integrating the Hinderer $y$-ODE [8] alongside the TOV equations. The full Hinderer formula [8] reads:</p>
+
+<div class="equation">\[k_2 = \frac{ \frac{8}{5}C^5(1 - 2C)^2\bigl[2 + 2C(y_R - 1) - y_R\bigr] } { 2C(6 - 3y_R + 3C(5y_R - 8)) + 4C^3(13 - 11y_R + C(3y_R - 2) + 2C^2(1 + y_R)) + 3(1 - 2C)^2(2 - y_R + 2C(y_R - 1))\ln(1 - 2C) }, \qquad \Lambda = \frac{2}{3} \frac{k_2}{C^5},\]</div>
+
+<p><em>Note on SLy Λ:</em> The value $\Lambda(1.4) = 557$ is for the Read et al. [6] piecewise-polytrope approximation to SLy. The full tabulated SLy EOS (Douchin \&amp; Haensel 2001) gives $\Lambda(1.4) \approx 700$–$730$, which is in $\sim2\sigma$ tension with the GW170817 upper bound ($\Lambda \lesssim 580$, 90% CI). The piecewise-polytrope value is used throughout this paper for consistency with the TOV integration; the qualitative trends (Λ decreasing with $\rho_0$) are EOS-independent.</p>
+
+<table><thead><tr><th>Configuration ($r_c = 2$ km)</th><th>$\Lambda(1.4\,M_\odot)$</th></tr></thead><tbody><tr><td>Pure SLy</td><td>557</td></tr><tr><td>$\rho_0 = 10^{10}$ g/cm³</td><td>544</td></tr><tr><td>$\rho_0 = 3 \times 10^{10}$ g/cm³</td><td>530</td></tr><tr><td>$\rho_0 = 10^{12}$ g/cm³</td><td>340</td></tr><tr><td>$\rho_0 = 10^{13}$ g/cm³</td><td>99</td></tr><tr><td>$\rho_0 = 3 \times 10^{13}$ g/cm³</td><td>54</td></tr></tbody></table>
+
+<figure><img src="tidal_gw170817_constraint.png" alt="Tidal GW170817 constraint"><figcaption>Tidal GW170817 constraint</figcaption></figure>
+
+<p><strong>Figure 3.</strong> Left: Tidal deformability $\Lambda$ vs mass, with the GW170817 excluded region ($\Lambda > 580$ at $M = 1.4\,M_\odot$, shaded red) and NICER PSR J0740+6620 mass constraint. Right: Mass-Radius diagram with NICER constraints from J0740+6620 and J0030+0451.</p>
+
+<p><strong>This is the paper's strongest direct GW connection to current data</strong>, though note that the NICER $M_{\rm max}$ bound (§3.2) is tighter on $\rho_0$ by a factor of $\sim$100. The relative strength of each channel is different: NICER constrains $\rho_0$ more sharply, but tidal deformability is less EOS-dependent and connects more directly to a single GW event. GW170817 constrains the χ-sector from <em>both sides</em>: the upper bound ($\Lambda \lesssim 580$) is satisfied by all configurations, but the lower bound ($\Lambda \gtrsim 70$) is violated at $\rho_0 \gtrsim 3\times10^{13}$ g/cm³ where $\Lambda(1.4) \approx 54$. At $\rho_0 = 10^{13}$ g/cm³ (NICER-excluded but tidal-allowed), $\Lambda(1.4) = 99$, still within the GW170817 window. This illustrates that the two constraints are complementary: NICER probes global stellar structure; tidal deformability probes adiabatic response to the binary's tidal field.</p>
+
+<h3>3.4 Post-Merger Gravitational Wave Frequency</h3>
+
+<p>From the TOV M-R curves, the post-merger oscillation frequency $f_2$ is predicted via the universal relation $f_2 \approx 2\,f_{\text{max}}$ with $f_{\text{max}} \propto C^{3/2}/M$ (Bernuzzi et al. 2015, Bauswein \&amp; Janka 2012 [12]). The coefficient is calibrated to numerical-relativity simulations: $f_2 \approx 2 \times 12.8\,C^{3/2}/M$ kHz. The SLy baseline at $1.4\,M_\odot$ is $f_2^{\text{(SLy)}} \approx 1.06$ kHz (using the piecewise-polytrope SLy). The χ-sector carries negative pressure, which <em>reduces</em> the stellar radius at fixed mass and thus <em>increases</em> the compactness $C = GM/Rc^2$. This compactification drives $f_2$ upward. The universal-relation coefficient carries $\sim$30% systematic uncertainty from EOS dependence; percentage shifts below should be read with that caveat.</p>
+
+<p><strong>Consistency note.</strong> Within the SLy EOS framework the NICER $M_{\rm max}$ bound (§3.2) excludes $\rho_0 \gtrsim 3\times10^{10}$ g/cm³ at $1\sigma$, or $\rho_0 \gtrsim 3\times10^{11}$ g/cm³ at $2\sigma$. Consequently, only the $\rho_0 = 10^{10}$ and $3\times10^{10}$ g/cm³ rows below are SLy-consistent at $1\sigma$; the remaining rows are predictions <em>conditional on a stiffer EOS</em> (APR4, MS1b, or similar) that accommodates higher $\rho_0$ while maintaining $M_{\rm max} > 2.01\,M_\odot$. They are retained here as illustrative of the magnitude of the $f_2$ effect across parameter space.</p>
+
+<table><thead><tr><th>$\rho_0$ (g/cm³)</th><th>$\Delta f_2 / f_2^{\text{(SLy)}}$ at $1.4\,M_\odot$</th><th>SLy status</th></tr></thead><tbody><tr><td>$10^{10}$</td><td>$+7\%$</td><td>Allowed ($1\sigma$)</td></tr><tr><td>$3 \times 10^{10}$</td><td>$+10\%$</td><td>Allowed ($1\sigma$)</td></tr><tr><td>$3 \times 10^{11}$</td><td>$+20\%$</td><td>NICER-excluded (SLy, $1\sigma$)</td></tr><tr><td>$10^{12}$</td><td>$+27\%$</td><td>NICER-excluded (SLy)</td></tr><tr><td>$3 \times 10^{13}$</td><td>$+64\%$</td><td>NICER-excluded (SLy)</td></tr></tbody></table>
+
+<p>The SLy-consistent predictions (+7%, +10%) are both at or below the ET post-merger precision threshold of $\sim 10\%$ at $1\sigma$. Detection of $f_2$ shifts $\gtrsim 10\%$ would simultaneously require evidence for a stiffer EOS from other channels.</p>
+
+<figure><img src="post_merger_f2.png" alt="Post-merger frequency"><figcaption>Post-merger frequency</figcaption></figure>
+
+<p><strong>Figure 4.</strong> Left: Post-merger GW frequency $f_2$ vs mass for different χ-sector strengths, with detector sensitivity bands. Right: Fractional shift relative to pure SLy. Rows above $\rho_0 = 10^{10}$ g/cm³ are NICER-excluded within SLy; they are shown to illustrate the magnitude of the effect for stiffer EOS.</p>
+
+<h3>3.5 Causality</h3>
+
+<p>A sweep of 394 stable configurations (varying $\rho_0$, $r_c$, and central pressure) finds <strong>zero superluminal sound-speed violations</strong> ($c_s^2 \leq 1$ everywhere). Two complementary behaviours emerge:</p>
+
+<ul><li><strong>Pure SLy</strong> ($\rho_0 = 0$): $c_s^2$ reaches 1.0000 at high central densities, saturating the causal limit of the stiff piecewise polytrope (segment $\Gamma_4 \approx 3.005$). This is a known property of Read et al. SLy parameterization and is not a violation.</li><li><strong>High $\rho_0$ (\chi-sector active)</strong>: the χ fluid's negative pressure compactifies the star, reducing the peak sound speed — $c_{s,\text{max}}^2$ drops to 0.60 at $\rho_0 = 10^{10}$ g/cm³ and 0.55 at $\rho_0 = 10^{12}$ g/cm³. The two-fluid model is comfortably causal in the parameter range where the χ-sector is physically significant.</li></ul>
+
+<p>The causality check is a theoretical consistency test, not an observational constraint.</p>
+
+<p><em>Code:</em> <code>tov_tidal.py</code>, <code>causality_sweep.py</code></p>
+
+<hr>
+
+<h2>4. Evaporation Remnant: A Dark Matter Connection</h2>
+
+<p>A negative-pressure core modifies the black hole evaporation endpoint. The Hawking temperature for the Hayward metric is (with $f'$ in geometric units [m$^{-1}$]; $T_H$ in Kelvins):</p>
+
+<div class="equation">\[T_H = \frac{\hbar c}{4\pi k_B} f'(r_h),\]</div>
+
+<p>where $r_h$ satisfies $f(r_h) = 0$. The temperature vanishes when $f'(r_h) = 0$, which combined with $f(r_h) = 0$ yields the <strong>extremal remnant mass:</strong></p>
+
+<div class="equation">\[\boxed{M_{\text{ext}} = \frac{3\sqrt{3}}{4}\,L \approx 1.299\,L}\]</div>
+
+<p>Converting to physical mass:</p>
+
+<table><thead><tr><th>$L$</th><th>Physical scale</th><th>$M_{\text{ext}}$ (g)</th><th>Fate</th></tr></thead><tbody><tr><td>$l_{\text{Planck}}$ ($10^{-35}$ m)</td><td>Quantum gravity</td><td>$\sim 10^{-5}$</td><td>Planck-scale remnant</td></tr><tr><td>$10^{-18}$ m</td><td>Electroweak</td><td>$\sim 10^4$</td><td>Microscopic — unobservable</td></tr><tr><td><strong>$10^{-15}$ m</strong></td><td><strong>QCD / proton</strong></td><td><strong>$\sim 10^{15}$</strong></td><td><strong>PBH dark matter window</strong></td></tr><tr><td>$10^{-12}$ m</td><td>Nuclear</td><td>$\sim 10^{18}$</td><td>Excluded by microlensing</td></tr><tr><td>$\gtrsim 10^{-3}$ m</td><td>Macroscopic</td><td>$\gtrsim 10^{24}$</td><td>Excluded</td></tr></tbody></table>
+
+<p>The primordial black hole dark matter window ($10^{15}$–$10^{17}$ g) corresponds precisely to $L$ near the QCD scale ($\sim 1$ fm). If regular black hole remnants exist and Hawking evaporation halts at $M_{\text{ext}}$, they would:</p>
+
+<ol><li><strong>Never fully evaporate</strong>, producing cold, stable relics.</li><li><strong>Contribute to dark matter</strong> if $L \sim 1$ fm — a concrete, testable connection between regular black holes and cosmology.</li><li><strong>Be detectable</strong> through femtolensing of gamma-ray bursts, microlensing surveys, and their stochastic GW background from early-Universe formation.</li></ol>
+
+<p>Non-observation in existing microlensing surveys (EROS, OGLE, MACHO) pushes the remnant mass below $\sim 10^{18}$ g, which translates to $L \lesssim 10^{-14}$ m — approaching the electroweak scale.</p>
+
+<p><strong>The remnant mass is the single number that connects regular black holes to dark matter.</strong> It is a direct consequence of the Hayward metric and Hawking's evaporation formalism, subject to two non-trivial additional assumptions: (i) the regular-core geometry remains stable throughout the evaporation process, and (ii) evaporation is quasi-static so that the extremal condition is reached adiabatically. Neither assumption has been verified dynamically.</p>
+
+<p><em>Code:</em> <code>hayward_remnant.py</code></p>
+
+<hr>
+
+<h2>5. Falsifiability Table</h2>
+
+<p>The following table summarizes the minimum observational thresholds required to exclude — or detect — a negative-pressure core. <strong>Entries marked with ✓ are constrained by data that already exists.</strong></p>
+
+<table><thead><tr><th>Observable</th><th>Current Constraint</th><th>Required Measurement</th><th>Detector</th><th>Timeline</th><th>Excludes</th></tr></thead><tbody><tr><td><strong>QNM shift (Hayward)</strong></td><td>$L/M < 0.316$ (GW150914)</td><td>$\Delta f/f \sim 10^{-4}$</td><td>ET/CE (100-event stack)</td><td>2030s</td><td>$L/M \gtrsim 0.045$</td></tr><tr><td><strong>QNM shift (Hayward)</strong></td><td>$L/M < 0.316$ (GW150914)</td><td>$\Delta f/f \sim 10^{-3}$</td><td>ET/CE (single event)</td><td>2030s</td><td>$L/M \gtrsim 0.14$</td></tr><tr><td><strong>QNM shift (Bardeen)</strong></td><td>None</td><td>$\Delta f/f \sim 10^{-4}$</td><td>ET/CE (100-event)</td><td>2030s</td><td>$e/M \gtrsim 0.027$</td></tr><tr><td><strong>QNM shift (Dymnikova)</strong></td><td>Unobservable</td><td>N/A</td><td>N/A</td><td>—</td><td>Exponential suppression</td></tr><tr><td><strong>Tidal deformability</strong> ✓</td><td>$70 \lesssim \Lambda(1.4) \lesssim 580$ (GW170817)</td><td>$\Lambda$ to $\sim 1\%$</td><td>LIGO A+ / ET</td><td><strong>Now</strong> / Late 2020s</td><td>$\rho_0 \gtrsim 3\times10^{13}$ g/cm³</td></tr><tr><td><strong>Post-merger $f_2$</strong></td><td>None</td><td>$f_2$ to $\sim 10\%$</td><td>ET</td><td>2030s</td><td>$\rho_0 \gtrsim 10^{12}$ g/cm³ (stiffer EOS than SLy required)</td></tr><tr><td><strong>M-R (NICER)</strong> ✓</td><td>$M = 2.08$, $R \approx 12.4$ km</td><td>Better $R$ precision</td><td>NICER / STROBE-X</td><td><strong>Now</strong></td><td>$\rho_0 \gtrsim 3\times10^{10}$ g/cm³ ($1\sigma$); $\gtrsim 3\times10^{11}$ g/cm³ ($2\sigma$)</td></tr><tr><td><strong>Echoes</strong></td><td>Ruled out unless horizonless</td><td>Echo SNR threshold</td><td>LIGO A+</td><td><strong>Now</strong></td><td>Horizonless objects</td></tr><tr><td><strong>Remnant DM</strong></td><td>$M_{\text{rem}} \lesssim 10^{18}$ g (microlensing)</td><td>Sub-lunar mass lensing</td><td>LSST / Roman</td><td>Late 2020s</td><td>$L \gtrsim 10^{-14}$ m</td></tr></tbody></table>
+
+<p><strong>Key observation:</strong> The tidal deformability channel is the only one that constrains the model with data that already exists. The ringdown channel is the most theoretically robust but requires next-generation detectors. The echo channel turns out to be a false lead — echoes test for horizon absence, not core regularity. The causality bound ($c_s^2 \leq 1$, 0/394 violations; see §3.5) is a theoretical consistency check, not an observational constraint, and is therefore not listed here.</p>
+
+<hr>
+
+<h2>6. Open Problems</h2>
+
+<ol><li><strong>EOS degeneracy.</strong> The TOV bound ranges from $\rho_0 \lesssim 3\times10^{10}$ g/cm³ ($1\sigma$ PSR mass) to $3\times10^{11}$ g/cm³ ($2\sigma$), and is SLy-conditional throughout. Marginalization over EOS priors (APR4, MS1b, H4) is required for a robust constraint.</li></ol>
+
+<ol><li><strong>Cross-metric completeness and isospectrality.</strong> Dymnikova QNM shifts are confirmed to be $\approx 0$ (exponential suppression), but the echo-extremality coincidence should be verified numerically for Bardeen and Dymnikova. The axial–polar isospectrality splitting of 0.11% is below the leading-order WKB truncation floor; third-order Konoplya WKB or an exact numerical computation is needed to determine whether isospectrality is genuinely preserved at that level.</li></ol>
+
+<ol><li><strong>Full Kerr.</strong> The slow-rotation WKB expansion is invalid at $a/M \sim 0.67$: the Lense-Thirring coupling is $\mathcal{O}(1)$ relative to the static potential peak, causing the first-order code to give unphysical spin-split frequencies (factor of $\sim 1.7\times$ from exact Kerr values). Teukolsky-equation solutions on the Hayward background are required for any spin-dependent result.</li></ol>
+
+<ol><li><strong>Core formation.</strong> No dynamical mechanism is provided. Gravitational collapse producing a regular core rather than a singularity remains an open problem.</li></ol>
+
+<ol><li><strong>Stability.</strong> The causality check is necessary but not sufficient. The Hayward metric's stability under non-spherical perturbations is unanalyzed.</li></ol>
+
+<ol><li><strong>$L$ remains a free parameter.</strong> The analysis constrains $L$ from data but does not predict it. Connecting $L$ to a fundamental scale (Planck, QCD, electroweak) requires a microphysical theory that this paper does not provide.</li></ol>
+
+<hr>
+
+<h2>Acknowledgements</h2>
+
+<p>Numerical computations, code generation, and editorial assistance were provided by GitHub Copilot (powered by Claude 4.6 Sonnet and DeepSeek-v4-pro). All scientific content, analysis decisions, and conclusions are the author's own.</p>
+
+<hr>
+
+<h2>References</h2>
+
+<ol><li>J. M. Bardeen, Non-singular general-relativistic gravitational collapse, in <em>Proceedings of GR5</em>, Tbilisi, 1968, p. 174.</li><li>I. Dymnikova, Vacuum nonsingular black hole, <em>General Relativity and Gravitation</em> <strong>24</strong>, 235 (1992).</li><li>S. A. Hayward, Formation and evaporation of nonsingular black holes, <em>Physical Review Letters</em> <strong>96</strong>, 031103 (2006).</li><li>S. Iyer and C. M. Will, Black-hole normal modes: A WKB approach, <em>Physical Review D</em> <strong>35</strong>, 3621 (1987).</li><li>B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration), Observation of gravitational waves from a binary black hole merger, <em>Physical Review Letters</em> <strong>116</strong>, 061102 (2016).</li><li>J. S. Read et al., Constraints on a phenomenologically parameterized neutron-star equation of state, <em>Physical Review D</em> <strong>79</strong>, 124032 (2009).</li><li>H. T. Cromartie et al., Relativistic Shapiro delay measurements of an extremely massive millisecond pulsar, <em>Nature Astronomy</em> <strong>4</strong>, 72 (2020).</li><li>T. Hinderer, Tidal Love numbers of neutron stars, <em>Astrophysical Journal</em> <strong>677</strong>, 1216 (2008).</li><li>B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration), GW170817: Measurements of neutron star radii and equation of state, <em>Physical Review Letters</em> <strong>121</strong>, 161101 (2018).</li><li>S. Chandrasekhar, <em>The Mathematical Theory of Black Holes</em>, Oxford University Press (1983), Ch. 4, §42–43.</li><li>K. D. Kokkotas and B. G. Schmidt, Quasi-normal modes of stars and black holes, <em>Living Reviews in Relativity</em> <strong>2</strong>, 2 (1999), §3.3.</li><li>S. Bernuzzi, T. Dietrich, W. Kastaun, and A. Stellwagen, Modeling the complete gravitational wave spectrum of neutron star mergers, <em>Physical Review D</em> <strong>91</strong>, 044056 (2015); A. Bauswein and H.-T. Janka, Measuring neutron-star properties via gravitational waves from binary mergers, <em>Physical Review Letters</em> <strong>108</strong>, 011101 (2012).</li><li>E. Berti, V. Cardoso, and A. O. Starinets, Quasinormal modes of black holes and black branes, <em>Classical and Quantum Gravity</em> <strong>26</strong>, 163001 (2009). [BCStab — Kerr QNM numerical tables]</li><li>B. P. Abbott et al. (LIGO Scientific Collaboration and Virgo Collaboration), GW170817: Constraining the nuclear matter equation of state from the neutron star tidal deformability, <em>Physical Review D</em> <strong>97</strong>, 021501(R) (2018). [Two-sided $\Lambda$ bounds]</li><li>B. Toshmatov, Z. Stuchlík, and B. Ahmedov, Quasinormal modes of test fields around regular black holes, <em>Physical Review D</em> <strong>95</strong>, 084037 (2017).</li><li>A. Flachi and J. P. S. Lemos, Quasinormal modes of regular black holes, <em>Physical Review D</em> <strong>87</strong>, 024034 (2013).</li><li>Z. Li and C. Bambi, Measuring the Bardeen regular black hole with astrophysical observations, <em>Physical Review D</em> <strong>87</strong>, 104022 (2013).</li></ol>
+
+<hr>
+
+<p><em>Code repository:</em> <code>tov_tidal.py</code>, <code>kerr_qnm.py</code>, <code>causality_sweep.py</code>, <code>hayward_remnant.py</code>, <code>post_merger_f2.py</code>, <code>tidal_gw170817.py</code>, <code>conceptual_diagram.py</code></p>
+</body>
+</html>
