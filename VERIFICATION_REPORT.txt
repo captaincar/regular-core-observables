@@ -1,5 +1,5 @@
 ======================================================================
-VERIFICATION REPORT: finalArticle.md numbers vs computed values
+VERIFICATION REPORT: manuscript numbers vs computed values
 ======================================================================
 
 LAMBDA(1.4 Msun) — r_c=2.0 km, n=2 (linear interpolation from CSV grid)

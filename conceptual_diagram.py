@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """
-Conceptual diagram for finalArticle: black hole with three observational channels.
+Conceptual diagram for the manuscript: black hole with three observational channels.
 Simple schematic showing ringdown (QNM shift), tides (Lambda), and echoes.
 """
 
