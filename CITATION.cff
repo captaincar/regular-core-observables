@@ -1,5 +1,5 @@
 cff-version: 1.2.0
-message: "If you use this repository, please cite the GitHub release or a later Zenodo DOI if available."
+message: "If you use this repository, please cite the archived Zenodo release for this version."
 title: "Regular Core Observables"
 type: software
 authors:
@@ -7,8 +7,9 @@ authors:
     given-names: "Rafal"
 version: "v1.0.0"
 date-released: "2026-06-17"
+doi: "10.5281/zenodo.20737352"
 repository-code: "https://github.com/captaincar/regular-core-observables"
-url: "https://github.com/captaincar/regular-core-observables/releases/tag/v1.0.0"
+url: "https://doi.org/10.5281/zenodo.20737352"
 abstract: "Code, manuscript, and public-summary materials for a computational study of observational signatures of regular-core compact objects, including ringdown, tidal-deformability, and echo phenomenology."
 keywords:
   - general relativity

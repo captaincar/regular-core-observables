@@ -1,5 +1,7 @@
 # Regular Core Observables
 
+[![DOI](https://zenodo.org/badge/1272502238.svg)](https://doi.org/10.5281/zenodo.20737351)
+
 This repository contains the manuscript, public summary, code, and generated figures for a computational study of observational constraints on regular black holes and negative-pressure cores in compact objects.
 
 The analysis focuses on three observational channels:
@@ -51,9 +53,14 @@ py build_popular_summary_html.py
 
 ## Citation
 
-For now, cite the archived GitHub release corresponding to this public snapshot.
-If a Zenodo DOI is minted for a later archival release, prefer the DOI-backed
-Zenodo record for formal citation.
+Use the Zenodo version DOI for formal citation of this archived release:
+`10.5281/zenodo.20737352`
+
+The badge above points to the Zenodo concept DOI:
+`10.5281/zenodo.20737351`
+
+The concept DOI is a stable project-level landing page. The version DOI refers
+to this exact archived release.
 
 ## Notes
 
