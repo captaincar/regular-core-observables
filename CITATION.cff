@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the GitHub release or a later Zenodo DOI if available."
+title: "Regular Core Observables"
+type: software
+authors:
+  - family-names: "Sasadeusz"
+    given-names: "Rafal"
+version: "v1.0.0"
+date-released: "2026-06-17"
+repository-code: "https://github.com/captaincar/regular-core-observables"
+url: "https://github.com/captaincar/regular-core-observables/releases/tag/v1.0.0"
+abstract: "Code, manuscript, and public-summary materials for a computational study of observational signatures of regular-core compact objects, including ringdown, tidal-deformability, and echo phenomenology."
+keywords:
+  - general relativity
+  - compact objects
+  - regular black holes
+  - ringdown
+  - tidal deformability
+  - gravitational-wave echoes

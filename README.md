@@ -49,6 +49,12 @@ py build_manuscript_html.py
 py build_popular_summary_html.py
 ```
 
+## Citation
+
+For now, cite the archived GitHub release corresponding to this public snapshot.
+If a Zenodo DOI is minted for a later archival release, prefer the DOI-backed
+Zenodo record for formal citation.
+
 ## Notes
 
 - The manuscript is a phenomenological study. It does **not** derive the regular core from a microphysical theory.
