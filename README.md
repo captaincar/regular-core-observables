@@ -54,7 +54,7 @@ py build_popular_summary_html.py
 ## Citation
 
 Use the Zenodo version DOI for formal citation of this archived release:
-`10.5281/zenodo.20737352`
+`10.5281/zenodo.20743731`
 
 The badge above points to the Zenodo concept DOI:
 `10.5281/zenodo.20737351`
@@ -68,12 +68,12 @@ BibTeX:
 @software{sasadeusz_regular_core_observables_2026,
 	author    = {Sasadeusz, Rafal},
 	title     = {Regular Core Observables},
-	version   = {v1.0.1},
+	version   = {v1.0.2},
 	year      = {2026},
 	month     = jun,
 	publisher = {Zenodo},
-	doi       = {10.5281/zenodo.20737352},
-	url       = {https://doi.org/10.5281/zenodo.20737352}
+	doi       = {10.5281/zenodo.20743731},
+	url       = {https://doi.org/10.5281/zenodo.20743731}
 }
 ```
 
