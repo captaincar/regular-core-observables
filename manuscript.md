@@ -120,14 +120,14 @@ $$
 
 The fractional deviation is $|\delta m|/M = (2/27)(L/M)^2$. How sensitive is this to the equation of state? The Hayward metric assumes $p = -\rho$ everywhere — a specific (and exotic) stress-energy tensor. A realistic nuclear EOS would modify the mass function at the photon sphere by an amount bounded by the core's total gravitational mass. For a core of extent $r_c \ll 3M$, $\delta m_{\text{EOS}}/M \lesssim (r_c/3M)^3(\rho_0/\rho_{\text{nuc}}) \sim 10^{-5}$ for the SLy-allowed $\rho_0 \lesssim 3\times10^{10}$ g/cm³, rising to $\sim 10^{-3}$ for the least restrictive bound (MS1b, $\rho_0 \lesssim 3\times10^{13}$ g/cm³).
 
-| $L/M$ | $|\delta m_{\text{Hayward}}|/M$ | Max EOS $|\delta m|/M$ | EOS correction to shift |
-|-------|-------------------------------|------------------------|------------------------|
-| 0.01  | $7.4 \times 10^{-6}$ | $\lesssim 10^{-3}$ | EOS-dominated (shift unobservable) |
-| 0.05  | $1.9 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 5\%$ |
-| 0.10  | $7.4 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 1\%$ |
-| 0.30  | $6.7 \times 10^{-3}$ | $\lesssim 10^{-3}$ | $\lesssim 0.2\%$ |
+| $L/M$ | $|\delta m_{\text{Hayward}}|/M$ | Max EOS $|\delta m|/M$ | $|\delta m_{\text{EOS}}|/|\delta m_{\text{Hayward}}|$ |
+|-------|-------------------------------|------------------------|--------------------------------|
+| 0.01  | $7.4 \times 10^{-6}$ | $\lesssim 10^{-3}$ | $\gg 1$ — EOS-dominated (shift unobservable) |
+| 0.05  | $1.9 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 5$ |
+| 0.10  | $7.4 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 1.4$ |
+| 0.30  | $6.7 \times 10^{-3}$ | $\lesssim 10^{-3}$ | $\lesssim 0.15$ |
 
-The Hayward-based QNM predictions are robust at the sub-percent level for observationally relevant $L/M \gtrsim 0.05$. At very small $L/M \lesssim 0.01$ (where the shift itself is $\lesssim 5\times10^{-5}$ and unobservable), EOS uncertainties dominate. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics for $L/M \gtrsim 0.05$.
+These ratios use the worst-case multi-EOS bound ($\delta m_{\text{EOS}}/M \lesssim 10^{-3}$, from MS1b at $\rho_0 \lesssim 3\times10^{13}$ g/cm³). The EOS uncertainty is substantial at $L/M \lesssim 0.05$ but becomes sub-dominant for $L/M \gtrsim 0.10$. For *SLy-specific* analyses ($\delta m_{\text{EOS}}/M \sim 10^{-5}$), the correction drops by two orders of magnitude — the Hayward prediction is robust at the sub-percent level for all $L/M \gtrsim 0.05$. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics *provided* the nuclear EOS is not stiffer than SLy; for stiffer EOS (APR4, MS1b), the degeneracy between $L$ and $\rho_0$ must be marginalized.
 
 ### 2.5 Spin and GW150914
 
@@ -173,10 +173,10 @@ $$
 with $\varepsilon_\chi = \rho_\chi(r)$, $p_{\text{total}} = p_{\text{m}} + p_\chi$, and the χ-sector density profile
 
 $$
-\chi(r) = \frac{1}{1 + (r/r_c)^n},
+\rho_\chi(r) = \frac{\rho_0}{1 + (r/r_c)^n},
 $$
 
-parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$. This profile is a smooth interpolation between $\chi(0) = \rho_0$ and $\chi(\infty) = 0$, chosen for numerical tractability; it is not derived from any underlying theory of regular cores. Because $w_\chi = -1$ in the core, the χ-fluid satisfies $\rho_\chi + p_\chi = 0$, so its pressure gradient vanishes identically in the TOV equation; the χ-sector is therefore a non-dynamical density profile rather than a self-gravitating fluid in independent equilibrium. This differs from the Hayward exact solution where $p = -\rho$ is maintained dynamically. The nuclear matter EOS is the **SLy piecewise polytrope** [6].
+parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$. This profile is a smooth interpolation between $\rho_\chi(0) = \rho_0$ and $\rho_\chi(\infty) = 0$, chosen for numerical tractability; it is not derived from any underlying theory of regular cores. Because $w_\chi = -1$ in the core, the χ-fluid satisfies $\rho_\chi + p_\chi = 0$, so its pressure gradient vanishes identically in the TOV equation; the χ-sector is therefore a non-dynamical density profile rather than a self-gravitating fluid in independent equilibrium. This differs from the Hayward exact solution where $p = -\rho$ is maintained dynamically. The nuclear matter EOS is the **SLy piecewise polytrope** [6].
 
 ### 3.2 Mass-Radius Results
 
@@ -300,7 +300,7 @@ The primordial black hole dark matter window ($10^{15}$–$10^{17}$ g) correspon
 2. **Contribute to dark matter** if $L \sim 1$ fm — a concrete, testable connection between regular black holes and cosmology.
 3. **Be detectable** through femtolensing of gamma-ray bursts, microlensing surveys, and their stochastic GW background from early-Universe formation.
 
-Non-observation in existing microlensing surveys (EROS, OGLE, MACHO) pushes the remnant mass below $\sim 10^{18}$ g, which translates to $L \lesssim 10^{-12}$ m ($M_{\rm ext} \approx 1.3L \times c^2/G$). Future sub-lunar lensing with LSST/Roman could probe $L \gtrsim 10^{-14}$ m — approaching the electroweak scale.
+Non-observation in existing microlensing surveys (EROS, OGLE, MACHO) pushes the remnant mass below $\sim 10^{18}$ g, which translates to $L \lesssim 10^{-12}$ m ($M_{\rm ext} \approx 1.3L \times c^2/G$). Future sub-lunar lensing with LSST/Roman could probe $L \gtrsim 10^{-14}$ m — entering the nuclear-scale regime below the current microlensing threshold.
 
 **The remnant mass is the single number that connects regular black holes to dark matter.** It is a direct consequence of the Hayward metric and Hawking's evaporation formalism, subject to two non-trivial additional assumptions: (i) the regular-core geometry remains stable throughout the evaporation process, and (ii) evaporation is quasi-static so that the extremal condition is reached adiabatically. Neither assumption has been verified dynamically.
 
@@ -322,7 +322,7 @@ The following table summarizes the minimum observational thresholds required to 
 | **Post-merger $f_2$** | None | $f_2$ to $\sim 10\%$ | ET | 2030s | $\rho_0 \gtrsim 10^{12}$ g/cm³ (stiffer EOS than SLy required) |
 | **M-R (NICER)** ✓ | $M = 2.08$, $R \approx 12.4$ km | Better $R$ precision | NICER / STROBE-X | **Now** | $\rho_0 \gtrsim 3\times10^{10}$–$>3\times10^{13}$ g/cm³ (1$\sigma$; EOS-dependent; SLy = $3\times10^{10}$, H4 = $3\times10^{11}$, APR4 = $1\times10^{12}$, MS1b $>3\times10^{13}$) |
 | **Echoes** | Ruled out unless horizonless | Echo SNR threshold | LIGO A+ | **Now** | Horizonless objects |
-| **Remnant DM** | $M_{\text{rem}} \lesssim 10^{18}$ g (microlensing) | Sub-lunar mass lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-12}$ m |
+| **Remnant DM** | $M_{\text{rem}} \lesssim 10^{18}$ g (microlensing) | Sub-lunar mass lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-14}$ m |
 
 **Key observation:** The tidal deformability channel is the only one that constrains the model with data that already exists. The ringdown channel is the most theoretically robust but requires next-generation detectors. The echo channel turns out to be a false lead — echoes test for horizon absence, not core regularity. The causality bound ($c_s^2 \leq 1$, 0/394 violations; see §3.5) is a theoretical consistency check, not an observational constraint, and is therefore not listed here.
 
