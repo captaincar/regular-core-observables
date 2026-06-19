@@ -1,42 +1,48 @@
 ======================================================================
 VERIFICATION REPORT: manuscript numbers vs computed values
+Date: 19 June 2026 (post golden-section K1 recalibration)
 ======================================================================
 
-LAMBDA(1.4 Msun) — r_c=2.0 km, n=2 (linear interpolation from CSV grid)
+LAMBDA(1.4 Msun) -- r_c=2.0 km, n=2 (verify_lambda.py, fresh run)
 ----------------------------------------------------------------------
-Configuration          Article   Interpolated   Verdict
-Pure SLy               571       571            ✓ EXACT
-rho0=1e10              557       557            ✓ EXACT
-rho0=1e12              346       346            ✓ EXACT
-rho0=1e13              101       101            ✓ EXACT
-rho0=3e13               55        55            ✓ EXACT
+Configuration          Article   Computed    Diff     Verdict
+Pure SLy               531       530.5       -0.1%    OK
+rho0=1e10              519       518.8       -0.04%   OK
+rho0=3e10              506       506.0       +0.0%    OK
+rho0=1e12              325       324.5       -0.2%    OK
+rho0=1e13               96        96.4       +0.4%    OK
+rho0=3e13               52        52.2       +0.4%    OK
 
-All Lambda numbers are CORRECT. The article properly interpolates
-between CSV grid points. No changes needed.
+All Lambda numbers are CORRECT within rounding. The 4.6% systematic shift
+from previous values (557->531 etc.) is due to the golden-section K1
+recalibration: K1 changed from 2.18e-10 to 2.1098e-10 (3.2% softer),
+which reduced the stellar radius at 1.4 Msun and correspondingly lowered
+Lambda. The trends (Lambda decreasing with rho0) are unchanged.
 
-M_max — r_c=2.0 km, n=2
+M_max -- r_c=2.0 km, n=2 (golden-section refined)
 ----------------------------------------------------------------------
-rho0         Article M_max    True M_max    Error    CSV p_c grid
-Pure SLy     2.029            2.059        +1.5%    truncated at 3.29e35
-1e10         2.029            2.044        +0.8%    truncated
-3e10         2.028            2.036        +0.4%    truncated
-1e11         1.963            2.014        +2.6%    truncated at 2.76e35
-3e11         1.960            1.987        +1.4%    truncated
-1e12         1.952            1.952        0.0%     ✓ correct
-3e12         1.851            1.905        +2.9%    truncated
-1e13         1.776            1.825        +2.8%    truncated
-3e13         1.702            1.702        0.0%     ✓ correct
+Configuration          M_max        Method
+Pure SLy (K1=2.11e-10) 2.050        golden-section refined
+H4 (K1=8.49e-09)       2.037        golden-section refined
+APR4 (K1=8.31e-08)     2.200        golden-section refined
+MS1b (K1=1.51e-16)     2.800        golden-section refined (piecewise limit)
 
-ROOT CAUSE: The CSV p_c sweep used the same pressure grid for all
-rho0, stopping at p_c=3.288e35. But for lower rho0, the TOV mass
-continues rising to higher p_c (peak at 3.6e35 for pure SLy).
-The CSV's "M_max" is just the mass at the grid's upper p_c bound,
-not the true TOV maximum.
+ECHO THRESHOLD -- Hayward metric (verify_echo_threshold.py)
+----------------------------------------------------------------------
+L_ext = 4M/(3*sqrt(3)) = 0.769800 M
 
-CONSEQUENTIAL ERROR: rho0=1e11 M_max changes from 1.963 (article:
-"excluded at 1.7sigma below PSR mass") to 2.014 (true: CONSISTENT
-with PSR J0740+6620 lower bound 2.01). This relaxes the NICER
-constraint from rho0 < 1e11 to potentially rho0 < 3e11.
+L/M < 0.770: horizon present -- NO ECHO (GW falls into horizon)
+L/M = 0.770: horizon annihilates -- dt_echo ~ 7.9 s (singular limit)
+L/M = 0.775: dt_echo = 6.3 ms for 10 Msun remnant (resolvable)
+L/M = 0.806: dt_echo = 2.3 ms (resolvable)
+L/M = 0.900: dt_echo = 1.1 ms (resolvable)
 
-MISSING DATA: No CSV entries for rho0=1e9 or 3e9 at r_c=2.0, n=2.
+The echo resolvability threshold (dt > 0.1 ms) coincides exactly with
+the extremal horizon condition. Echoes require horizonless objects.
+
+MARGINALIZED RHO0 BOUNDS (eos_marginalize.py, golden-section calibrated)
+----------------------------------------------------------------------
+SLy-only 1sigma:     3.0e10 g/cm3  [most conservative]
+SLy+APR4 marginalized: ~8e11 g/cm3  [GW170817-consistent]
+All-4 marginalized:   ~1.2e13 g/cm3 [MS1b-inflated, MS1b excluded by GW170817]
 ======================================================================

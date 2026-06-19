@@ -243,10 +243,12 @@ def regge_wheeler_potential(r, M, L, ell=2):
     """Axial (Regge-Wheeler) potential for Hayward metric, l>=2, s=2.
     
     The correct vacuum-perturbation axial potential on a spherically symmetric
-    background with g_tt = -1/g_rr = f(r) is V = f(r)[l(l+1)/r^2 - 6m_eff(r)/r^3].
-    The matter-coupling term 4π(ρ-p) that appears in some polar/fluid-perturbation
-    formulations is absent for vacuum metric perturbations. For the Hayward metric,
-    ρ-p = 2ρ ∝ (L/M)^4 at the photon sphere, so it is negligible even if included.
+    background with g_tt = -1/g_rr = f(r) is V = f(r)[l(l+1)/r^2 - 6m_eff(r)/r^3]
+    (Chandrasekhar 1983, §42-43). The master equation depends only on the metric
+    functions f(r) and m_eff(r), not directly on the stress-energy tensor components.
+    The non-vacuum character enters solely through m_eff(r) ≠ M. Matter-coupling
+    terms 4π(ρ-p) that appear in some polar/fluid formulations are absent for
+    vacuum metric axial perturbations.
     """
     f = hayward_f(r, M, L)
     m_eff = M * r**3 / (r**3 + 2*M*L**2)

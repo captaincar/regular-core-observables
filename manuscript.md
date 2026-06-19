@@ -64,7 +64,7 @@ The stress-energy tensor has energy density $\rho = -p_r = 3ML^2 / [4\pi(r^3 + 2
 
 ### 2.2 QNM Frequency Shift: WKB Calculation
 
-We compute the $\ell = 2$, $n = 0$ quasinormal-mode frequency for axial (Regge-Wheeler) perturbations using the leading-order Iyer-Will WKB formula [4]: $\omega^2 = V_0 - i K \sqrt{-2V_2}$. For metric perturbations on the Hayward background, the axial potential is $V_\ell = f(r)[\ell(\ell+1)/r^2 - 6m(r)/r^3]$ with the effective mass function $m_{\text{eff}}(r) = Mr^3/(r^3 + 2ML^2)$. The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. Matter-coupling terms $4\pi(\rho-p)$ are $\mathcal{O}(L/M)^4$ suppressed and negligible at the $\mathcal{O}(L/M)^2$ order being computed.
+We compute the $\ell = 2$, $n = 0$ quasinormal-mode frequency for axial (Regge-Wheeler) perturbations using the leading-order Iyer-Will WKB formula [4] (for a review of QNM methods see Kokkotas & Schmidt [11]): $\omega^2 = V_0 - i K \sqrt{-2V_2}$. For metric perturbations on the Hayward background, the axial potential is $V_\ell = f(r)[\ell(\ell+1)/r^2 - 6m(r)/r^3]$ [10] with the effective mass function $m_{\text{eff}}(r) = Mr^3/(r^3 + 2ML^2)$. The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. For axial (Regge-Wheeler) perturbations on any spherically symmetric background, the master equation depends only on the metric functions $f(r)$ and $m_{\rm eff}(r)$, not directly on the stress-energy tensor components (Chandrasekhar [10], §42–43). The non-vacuum character of the Hayward metric enters solely through $m_{\rm eff}(r) \neq M$.
 
 **Result — Hayward:**
 
@@ -88,9 +88,9 @@ $$
 | **Bardeen** | $0.139\,(e/M)^2$ | $Mr^3/(r^2 + e^2)^{3/2}$ | Polynomial $\sim (e/r)^2$ |
 | **Dymnikova** | $\approx 0$ | $M(1 - e^{-r^3/(2ML^2)})$ | Exponential $\sim e^{-(M/L)^2}$ |
 
-The Bardeen coefficient is 2.8× the Hayward value — the QNM shift prefactor is **strongly metric-dependent**. A leading-order analytic estimate (expanding $m_{\rm eff}(r)$ at $r=3M$) gives $\delta m/M \approx -(e/M)^2/6$ for Bardeen vs $-2(L/M)^2/27$ for Hayward, predicting a coefficient ratio of $27/12 = 2.25$; the WKB-fitted value 0.139 (ratio 2.8) includes the photon-sphere location shift from higher-order terms. The Dymnikova shift is **exponentially suppressed**: at the photon sphere $r \approx 3M$, the mass function deviation is $\exp(-27M^2/(2L^2))$, which is $< 10^{-23}$ for $L/M < 0.5$. The Dymnikova core is invisible to QNM observations for all practical $L/M$. This establishes three qualitatively different observability classes: polynomial-suppressed (Hayward), power-law-suppressed (Bardeen), and exponentially-suppressed (Dymnikova).
+The Bardeen coefficient is 2.8× the Hayward value — the QNM shift prefactor is **strongly metric-dependent**. A leading-order analytic estimate (expanding $m_{\rm eff}(r)$ at $r=3M$) gives $\delta m/M \approx -(e/M)^2/6$ for Bardeen vs $-2(L/M)^2/27$ for Hayward, predicting a coefficient ratio of $27/12 = 2.25$; the WKB-fitted value 0.139 (ratio 2.8) includes the photon-sphere location shift from higher-order terms.^[Earlier versions of this work reported a coefficient of 0.128 from an approximate fit; the improved value 0.139 comes from a dedicated WKB sweep (30 $e/M$ values, least-squares fit to $|\delta f/f| = c\,(e/M)^2$) integrated into the `kerr_qnm.py` pipeline as of June 2026.] The Dymnikova shift is **exponentially suppressed**: at the photon sphere $r \approx 3M$, the mass function deviation is $\exp(-27M^2/(2L^2))$, which is $< 10^{-23}$ for $L/M < 0.5$. The Dymnikova core is invisible to QNM observations for all practical $L/M$. This establishes three qualitatively different observability classes: polynomial-suppressed (Hayward), power-law-suppressed (Bardeen), and exponentially-suppressed (Dymnikova).
 
-**Relation to existing work.** QNM spectra of regular black holes have been computed by Flachi & Lemos (2013) for the Dymnikova metric, by Li & Bambi (2013) for the Bardeen metric, and by Toshmatov et al. (2017, PRD 95, 084037) for both Bardeen and Hayward using 6th-order WKB and time-domain integration. The present work differs in three respects: (i) we fit the leading-order $(L/M)^2$ or $(e/M)^2$ scaling coefficient directly from the WKB data, providing a compact parameterization with explicit error estimates; (ii) we compute the *cross-metric* taxonomy — the three suppression classes (polynomial, power-law, exponential) — in a single unified framework; and (iii) we connect the QNM shift thresholds to detector sensitivity curves and to the echo–extremality coincidence, which was not identified in earlier work.
+**Relation to existing work.** QNM spectra of regular black holes have been computed by Flachi & Lemos (2013) [16] for the Dymnikova metric, by Li & Bambi (2013) [17] for the Bardeen metric, and by Toshmatov et al. (2017) [15] for both Bardeen and Hayward using 6th-order WKB and time-domain integration. The present work differs in three respects: (i) we fit the leading-order $(L/M)^2$ or $(e/M)^2$ scaling coefficient directly from the WKB data, providing a compact parameterization with explicit error estimates; (ii) we compute the *cross-metric* taxonomy — the three suppression classes (polynomial, power-law, exponential) — in a single unified framework; and (iii) we connect the QNM shift thresholds to detector sensitivity curves and to the echo–extremality coincidence, which was not identified in earlier work.
 
 ![Cross-metric QNM comparison](cross_metric_qnm.png)
 
@@ -104,7 +104,7 @@ $$
 \Delta t_{\text{echo}} \approx 2 \int_{r_{\text{core}}}^{r_{\text{barrier}}} \frac{dr}{f(r)}.
 $$
 
-A numerical sweep reveals that echo delays become LIGO-resolvable ($\gtrsim 0.1$ ms for $10\,M_\odot$) at $L/M \gtrsim 0.77$. **This value coincides exactly with the Hayward extremality condition** $L_{\text{ext}} = 4M/(3\sqrt{3}) \approx 0.770\,M$.
+A numerical integration of the tortoise integral (see `verify_echo_threshold.py`) confirms that resolvable echoes require $L/M \gtrsim 0.77$: for $L/M < 0.770$, the horizon prevents GW reflection from the core (no echo); at $L/M = 0.770$, the horizon annihilates and $\Delta t_{\text{echo}} \sim \mathcal{O}(1)$ s; at $L/M \gtrsim 0.78$, the delay drops to $\sim 2$–$6$ ms for a $10\,M_\odot$ remnant — well above the LIGO resolvability threshold of $\sim 0.1$ ms. **The threshold $L/M \approx 0.77$ coincides exactly with the Hayward extremality condition** $L_{\text{ext}} = 4M/(3\sqrt{3}) \approx 0.770\,M$.
 
 The physical interpretation: echo-producing configurations are those where the two horizons have merged and **there is no horizon at all**. Echo signatures require horizonless objects, not merely regular-cored black holes. This corrects a confusion in the regular-black-hole literature where echoes were discussed as a general prediction of regular cores.
 
@@ -126,34 +126,27 @@ $$
 
 The Hayward-based QNM predictions are robust at the few-percent level for observationally relevant $L/M$. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics.
 
-### 2.5 Kerr Slow-Rotation Extension
+### 2.5 Spin and GW150914
 
-Every LIGO/Virgo/KAGRA remnant is spinning. We extend to slow rotation via the Lense-Thirring frame-dragging correction (Hartle-Thorne, linearised in $a$):
+Every LIGO/Virgo/KAGRA remnant is spinning. We implemented a Lense-Thirring frame-dragging correction linear in $a/M$ for the Hayward background (Hartle-Thorne formalism). However, for GW150914 ($a/M \approx 0.67$, $M = 62\,M_\odot$ [5]) the expansion breaks down: the Lense-Thirring coupling at the photon sphere ($\approx 0.15$ in geometric units) is comparable to the static potential peak ($V_0 \approx 0.14$), placing the system deep in the non-perturbative regime. The resulting spin-split frequencies are artefacts of solving the wrong (linear-in-$a$) equation — they differ from exact Kerr QNM values by a factor of $\sim 1.7\times$ [BCStab].
 
-$$
-V_{\ell m}^{\text{eff}}(r, \omega, a) = V_\ell^{\text{(static)}}(r) \pm 2m\omega\,\chi\,\omega_{\text{fd}}^{(a/M=1)}(r) + \mathcal{O}(a^2),
-$$
+We therefore do **not** report spin-dependent QNM shifts. The reliable result is the static one:
 
-where $\chi = a/M$ and $\omega_{\text{fd}}^{(a/M=1)}$ is the frame-dragging function computed for unit spin. Since $\omega$ appears in the potential, the WKB condition is self-referential; the code iterates to relative tolerance $10^{-8}$ (converges in $\lesssim 5$ steps for $a/M \ll 1$).
+- **Static Hayward shift** at $L/M = 0.316$ (the upper end of the WKB sweep grid; the value is well within the black-hole regime where the WKB barrier peak is resolvable) is $|\delta f/f| = 0.49\%$.
+- GW150914 ringdown precision is $\sim 10\%$ (the 20% dominant-mode constraint from Isi et al. 2019, PRL 123, 111102; 10% is attainable with stacked higher modes).
+- **Conclusion:** GW150914 cannot constrain $L/M$ — the core shift is two orders of magnitude below threshold.
 
-**Validity caveat.** For GW150914 ($a/M \approx 0.67$), the next-order term $(a/M)^2 \approx 0.45$ is comparable to the leading correction. The results below are therefore first-order estimates; a rigorous treatment requires the Teukolsky equation on the Hayward background (see §6, Open Problem 3).
+Isospectrality is preserved at the level accessible to leading-order WKB: the axial–polar splitting is $0.11\%$, below the method's own truncation error ($\sim 4\%$ absolute offset: WKB gives 208 Hz vs exact Schwarzschild 195 Hz). This splitting is a WKB artefact, not a physical signal. The Zerilli extension used here substitutes $m_{\rm eff}(r)$ for the constant $M$ in the standard Schwarzschild formula; a rigorous derivation from the perturbed stress-energy tensor has not been performed. The 0.11% splitting is therefore best interpreted as an upper bound on any genuine isospectrality violation, not as a physical prediction. We report an upper bound: $|f_{\rm polar} - f_{\rm axial}|/f < 0.12\%$ (static, subject to WKB systematics).
 
-**GW150914 results** ($M = 62\,M_\odot$, $a/M \approx 0.67$ [5]):
+Future detectability of the static Hayward shift:
 
-| Quantity | Value |
-|----------|-------|
-| Axial QNM shift at $L/M = 0.316$ (static) | $|\delta f/f| = 0.49\%$ |
-| Axial–polar isospectrality splitting (static) | $0.11\%$ ($< 0.12\%$) |
-| Spin splitting $m{=}\pm2$ (first-order code, $a/M{=}0.67$) | [non-perturbative artefact — expansion invalid; exact Kerr: $f\approx295$ Hz ($m{=}{+}2$), $\approx105$ Hz ($m{=}{-}2$) [13]] |
-| LIGO ringdown precision (GW150914) | $\sim 10\%$ |
-| **GW150914 constraint on $L/M$** | **None — core shift two orders of magnitude below threshold** |
-| ET/CE detection threshold | $L/M \gtrsim 0.045$ (stacking 100 events, $\delta f/f \sim 10^{-4}$) |
-| ET/CE single event | $L/M \gtrsim 0.14$ ($\delta f/f \sim 10^{-3}$) |
-| O4/O5 stacking (100 events, $1\%$ sensitivity) | $L/M \gtrsim 0.45$ (near extremality) |
+| Detector scenario | Sensitivity | Constraint on $L/M$ |
+|-------------------|-------------|---------------------|
+| O4/O5 stacking (100 events, $1\%$ $\delta f/f$) | $\sim 1\%$ | $L/M \gtrsim 0.45$ (near extremality) |
+| ET/CE single event ($10^{-3}$ $\delta f/f$) | $\sim 0.1\%$ | $L/M \gtrsim 0.14$ |
+| ET/CE 100-event stack ($10^{-4}$ $\delta f/f$) | $\sim 0.01\%$ | $L/M \gtrsim 0.045$ |
 
-**Spin-correction caveat.** For the static (non-spinning) case the WKB result is self-consistent and the ~6.7% absolute frequency offset from exact Schwarzschild (208 Hz vs 195 Hz) cancels in the fractional shift. For the spin-corrected case the slow-rotation expansion has **completely broken down** at $a/M = 0.67$: the Lense-Thirring coupling $2m\omega\chi\omega_{\rm fd}$ at the photon sphere is $\approx 0.15$ in geometric units, comparable to the static potential peak $V_0 \approx \omega_0^2 \approx 0.14$. The code converges to a self-consistent but non-perturbative solution to the wrong (linear-in-$a$) equation. The quoted $f_\pm$ values are artifacts. For reference, the exact Kerr QNM at $a/M = 0.67$, $M = 62\,M_\odot$ from Berti, Cardoso \& Starinets numerical tables [BCStab] is $f \approx 295$ Hz ($m=+2$) and $\approx 105$ Hz ($m=-2$) — versus the code's 510 Hz and 179 Hz. A proper treatment requires the Teukolsky equation on the Hayward background.
-
-Isospectrality is preserved at the level accessible to leading-order WKB: the axial–polar splitting is $0.11\%$, but this is below the method's own truncation error ($\sim 4\%$ absolute offset on individual frequencies, as seen from the Schwarzschild reference 208 Hz vs exact 195 Hz). **This splitting cannot be distinguished from a WKB truncation artefact at this order.** A meaningful bound on isospectrality breaking requires 3rd-order Konoplya WKB or an exact numerical computation on the Hayward background. The result is reported here as an upper bound: $|f_{\rm polar} - f_{\rm axial}|/f < 0.12\%$ subject to WKB systematics. Rotation does not amplify the *Hayward-core* shift: the static result is the trustworthy bound: GW150914 cannot constrain $L/M$.
+A proper spin treatment requires the Teukolsky equation on the Hayward background (§6, Open Problem 3).
 
 ![Kerr QNM sweep](kerr_qnm.png)
 
@@ -180,11 +173,11 @@ $$
 \chi(r) = \frac{1}{1 + (r/r_c)^n},
 $$
 
-parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$. This profile is a smooth interpolation between $\chi(0) = \rho_0$ and $\chi(\infty) = 0$, chosen for numerical tractability; it is not derived from any underlying theory of regular cores. The nuclear matter EOS is the **SLy piecewise polytrope** [6].
+parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$. This profile is a smooth interpolation between $\chi(0) = \rho_0$ and $\chi(\infty) = 0$, chosen for numerical tractability; it is not derived from any underlying theory of regular cores. Because $w_\chi = -1$ in the core, the χ-fluid satisfies $\rho_\chi + p_\chi = 0$, so its pressure gradient vanishes identically in the TOV equation; the χ-sector is therefore a non-dynamical density profile rather than a self-gravitating fluid in independent equilibrium. This differs from the Hayward exact solution where $p = -\rho$ is maintained dynamically. The nuclear matter EOS is the **SLy piecewise polytrope** [6].
 
 ### 3.2 Mass-Radius Results
 
-**Pure SLy baseline:** $M_{\max} = 2.049\,M_\odot$ — consistent with PSR J0740+6620 ($M = 2.08 \pm 0.07\,M_\odot$ [7]).
+**Pure SLy baseline:** $M_{\max} = 2.050\,M_\odot$ (golden-section refined) — consistent with PSR J0740+6620 ($M = 2.08 \pm 0.07\,M_\odot$ [7]).
 
 **With χ-sector** ($r_c = 2$ km; $1\sigma$ PSR lower bound $\approx 2.01\,M_\odot$):
 
@@ -198,9 +191,20 @@ parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$.
 | $3 \times 10^{12}$ | 1.890 | Excluded |
 | $10^{13}$ | 1.820 | Excluded |
 
-The inferred constraint depends on confidence level. At **$1\sigma$** ($M_{\rm max} > 2.01\,M_\odot$): $\boxed{\rho_0 \lesssim 3\times10^{10}\ \text{g/cm}^3}$. At **$2\sigma$** ($M_{\rm max} > 1.94\,M_\odot$): $\rho_0 \lesssim 3\times10^{11}\ \text{g/cm}^3$. Both bounds are three orders of magnitude below nuclear saturation density ($\rho_{\rm nuc} \approx 2.3\times10^{14}$ g/cm³). Both are SLy-specific; stiffer EOS choices (APR4, MS1b) would relax them. A meaningful constraint requires marginalization over nuclear EOS uncertainty.
+The inferred constraint depends on confidence level. At **$1\sigma$** ($M_{\rm max} > 2.01\,M_\odot$): $\boxed{\rho_0 \lesssim 3\times10^{10}\ \text{g/cm}^3}$. At **$2\sigma$** ($M_{\rm max} > 1.94\,M_\odot$): $\rho_0 \lesssim 3\times10^{11}\ \text{g/cm}^3$. Both bounds are three orders of magnitude below nuclear saturation density ($\rho_{\rm nuc} \approx 2.3\times10^{14}$ g/cm³). Both are SLy-specific; stiffer EOS choices (APR4, MS1b) would relax them. A meaningful constraint requires marginalization over nuclear EOS uncertainty. The $M_{\max} = 2.050\,M_\odot$ pure-SLy value is consistent with the PSR J0740+6620 mass measurement ($2.08 \pm 0.07\,M_\odot$ [7,9]) and the GW170817 tidal deformation measurement [9,14].
 
-*Note on precision:* M_max values are extracted from the p_c grid scan (46 log-spaced points); a targeted fine scan at the pure-SLy peak gives M_max = 2.056 M_⊙, confirming the grid values are within 0.3% of the true maximum. No qualitative constraint changes.
+**Multi-EOS comparison.** To quantify the EOS dependence, we repeat the M_max scan for four nuclear equations of state from Read et al. [6]: SLy, H4, APR4, and MS1b. Each is implemented as a piecewise polytrope with the Read et al. adiabatic indices $\Gamma_i$; $K_{\rm CORE1}$ is calibrated to reproduce the literature M_max via two-phase binary search (coarse grid followed by golden-section refinement). The calibrated values are: SLy $K_1 = 2.11\times10^{-10}$, H4 $K_1 = 8.49\times10^{-9}$, APR4 $K_1 = 8.31\times10^{-8}$, MS1b $K_1 = 1.51\times10^{-16}$ (all cgs). Using the same adaptive p_c grid ($10^{33}$–$10^{37.5}$ dyne/cm², 80 points) and $\chi$-sector parameters ($r_c = 2$ km, $n=2$) throughout:
+
+| EOS | $\Gamma_1$ | $M_{\max}$ pure ($M_\odot$) | $\rho_0$ 1$\sigma$ bound | $\rho_0$ 2$\sigma$ bound |
+|------|-----------|---------------------------|------------------------|------------------------|
+| SLy | 3.005 | 2.050 | $3\times10^{10}$ | $3\times10^{11}$ |
+| H4 | 2.909 | 2.037$^\dagger$ | $3\times10^{11}$ | $3\times10^{12}$ |
+| APR4 | 2.830 | 2.200 | $1\times10^{12}$ | $3\times10^{12}$ |
+| MS1b | 3.456 | 2.800 | $>3\times10^{13}$ | $>3\times10^{13}$ |
+
+The NICER-allowed $\rho_0$ varies by **three orders of magnitude** across EOS choices — from $3\times10^{10}$ g/cm³ (SLy, the softest EOS consistent with PSR J0740+6620) to above $3\times10^{13}$ g/cm³ (MS1b). The physical interpretation is transparent: stiffer EOSs support higher maximum masses, absorbing more $\chi$-sector mass without violating the NICER threshold. MS1b is exceptionally stiff ($\Gamma_1 = 3.456$), yielding $M_{\max}^{\rm pure} = 2.800\,M_\odot$ — well above the PSR mass — so the 1$\sigma$ bound extends beyond our maximum grid point ($\rho_0 = 3\times10^{13}$, where $M_{\max}$ is still 2.131 $M_\odot$). The MS1b $M_{\max}$ overshoots the tabulated literature value of $2.76\,M_\odot$ by $\sim 1.5\%$; this is a known limitation of the 4-segment piecewise-polytrope at extreme stiffness (Read et al. note that the piecewise approximation does not perfectly reproduce tabulated EOSs). MS1b-derived $\rho_0$ bounds should therefore be treated as upper limits. H4 ($M_{\max}^{\rm pure} = 2.037$) sits barely above the NICER 1$\sigma$ threshold even without a $\chi$-sector, so the 1$\sigma$ bound is correspondingly tight. The SLy constraint of $\rho_0 \lesssim 3\times10^{10}$ g/cm³ is therefore the **most conservative** bound among viable EOSs; any EOS softer than SLy would already be excluded by PSR J0740+6620 without a $\chi$-sector. The qualitative conclusion — $\chi$-sector core densities are bounded to well below nuclear saturation — is robust across the EOS landscape, but the precise numerical bound is EOS-conditional. $^\dagger$H4's $M_{\max}^{\rm pure} = 2.037\,M_\odot$ lies within the PSR J0740+6620 1$\sigma$ mass range even without a χ-sector; the listed $\rho_0 = 3\times10^{11}$ g/cm³ 1$\sigma$ bound corresponds to a configuration only marginally above the pure-H4 maximum mass and should be interpreted with this proximity in mind.
+
+*Note on precision:* M_max values are extracted from the adaptive grid scan with golden-section refinement. For pure SLy, the coarse grid (30 points) gives $M_{\max} = 2.021\,M_\odot$ while the refined value is $2.050\,M_\odot$ — a 1.4\% upward correction. All M_max values quoted in this section are the refined (converged) values.
 
 ### 3.3 Tidal Deformability — Direct Connection to GW170817
 
@@ -213,22 +217,22 @@ k_2 = \frac{ \frac{8}{5}C^5(1 - 2C)^2\bigl[2 + 2C(y_R - 1) - y_R\bigr] }
 \Lambda = \frac{2}{3} \frac{k_2}{C^5},
 $$
 
-*Note on SLy Λ:* The value $\Lambda(1.4) = 557$ is for the Read et al. [6] piecewise-polytrope approximation to SLy. The full tabulated SLy EOS (Douchin \& Haensel 2001) gives $\Lambda(1.4) \approx 700$–$730$, which is in $\sim2\sigma$ tension with the GW170817 upper bound ($\Lambda \lesssim 580$, 90% CI). The piecewise-polytrope value is used throughout this paper for consistency with the TOV integration; the qualitative trends (Λ decreasing with $\rho_0$) are EOS-independent.
+*Note on SLy Λ:* The value $\Lambda(1.4) = 531$ is for the Read et al. [6] piecewise-polytrope approximation to SLy. At 531, it lies within ~8% of the GW170817 90% CI upper bound of 580 [9,14] — marginally consistent, but tight. The full tabulated SLy EOS (Douchin \& Haensel 2001) gives $\Lambda(1.4) \approx 700$–$730$, which is in $\sim2\sigma$ tension with GW170817; the piecewise-polytrope value (used throughout for consistency with the TOV integration) is softer. The qualitative trends (Λ decreasing with $\rho_0$) are EOS-independent.
 
 | Configuration ($r_c = 2$ km) | $\Lambda(1.4\,M_\odot)$ |
 |---|---|
-| Pure SLy | 557 |
-| $\rho_0 = 10^{10}$ g/cm³ | 544 |
-| $\rho_0 = 3 \times 10^{10}$ g/cm³ | 530 |
-| $\rho_0 = 10^{12}$ g/cm³ | 340 |
-| $\rho_0 = 10^{13}$ g/cm³ | 99 |
-| $\rho_0 = 3 \times 10^{13}$ g/cm³ | 54 |
+| Pure SLy | 531 |
+| $\rho_0 = 10^{10}$ g/cm³ | 519 |
+| $\rho_0 = 3 \times 10^{10}$ g/cm³ | 506 |
+| $\rho_0 = 10^{12}$ g/cm³ | 325 |
+| $\rho_0 = 10^{13}$ g/cm³ | 96 |
+| $\rho_0 = 3 \times 10^{13}$ g/cm³ | 52 |
 
 ![Tidal GW170817 constraint](tidal_gw170817_constraint.png)
 
 **Figure 3.** Left: Tidal deformability $\Lambda$ vs mass, with the GW170817 excluded region ($\Lambda > 580$ at $M = 1.4\,M_\odot$, shaded red) and NICER PSR J0740+6620 mass constraint. Right: Mass-Radius diagram with NICER constraints from J0740+6620 and J0030+0451.
 
-**This is the paper's strongest direct GW connection to current data**, though note that the NICER $M_{\rm max}$ bound (§3.2) is tighter on $\rho_0$ by a factor of ~100. The relative strength of each channel is different: NICER constrains $\rho_0$ more sharply, but tidal deformability is less EOS-dependent and connects more directly to a single GW event. GW170817 constrains the χ-sector from *both sides*: the upper bound ($\Lambda \lesssim 580$) is satisfied by all configurations, but the lower bound ($\Lambda \gtrsim 70$) is violated at $\rho_0 \gtrsim 3\times10^{13}$ g/cm³ where $\Lambda(1.4) \approx 54$. At $\rho_0 = 10^{13}$ g/cm³ (NICER-excluded but tidal-allowed), $\Lambda(1.4) = 99$, still within the GW170817 window. This illustrates that the two constraints are complementary: NICER probes global stellar structure; tidal deformability probes adiabatic response to the binary's tidal field.
+**This is the paper's strongest direct GW connection to current data**, though note that the NICER $M_{\rm max}$ bound (§3.2) is tighter on $\rho_0$ by a factor of ~100. The relative strength of each channel is different: NICER constrains $\rho_0$ more sharply, but tidal deformability is less EOS-dependent and connects more directly to a single GW event. GW170817 constrains the χ-sector from *both sides* [9,14]: the upper bound ($\Lambda \lesssim 580$) is satisfied by all configurations, but the lower bound ($\Lambda \gtrsim 70$) is violated at $\rho_0 \gtrsim 3\times10^{13}$ g/cm³ where $\Lambda(1.4) \approx 52$. At $\rho_0 = 10^{13}$ g/cm³ (NICER-excluded but tidal-allowed), $\Lambda(1.4) = 96$, still within the GW170817 window. This illustrates that the two constraints are complementary: NICER probes global stellar structure; tidal deformability probes adiabatic response to the binary's tidal field.
 
 ### 3.4 Post-Merger Gravitational Wave Frequency
 
@@ -293,7 +297,7 @@ The primordial black hole dark matter window ($10^{15}$–$10^{17}$ g) correspon
 2. **Contribute to dark matter** if $L \sim 1$ fm — a concrete, testable connection between regular black holes and cosmology.
 3. **Be detectable** through femtolensing of gamma-ray bursts, microlensing surveys, and their stochastic GW background from early-Universe formation.
 
-Non-observation in existing microlensing surveys (EROS, OGLE, MACHO) pushes the remnant mass below $\sim 10^{18}$ g, which translates to $L \lesssim 10^{-14}$ m — approaching the electroweak scale.
+Non-observation in existing microlensing surveys (EROS, OGLE, MACHO) pushes the remnant mass below $\sim 10^{18}$ g, which translates to $L \lesssim 10^{-12}$ m ($M_{\rm ext} \approx 1.3L \times c^2/G$). Future sub-lunar lensing with LSST/Roman could probe $L \gtrsim 10^{-14}$ m — approaching the electroweak scale.
 
 **The remnant mass is the single number that connects regular black holes to dark matter.** It is a direct consequence of the Hayward metric and Hawking's evaporation formalism, subject to two non-trivial additional assumptions: (i) the regular-core geometry remains stable throughout the evaporation process, and (ii) evaporation is quasi-static so that the extremal condition is reached adiabatically. Neither assumption has been verified dynamically.
 
@@ -307,15 +311,15 @@ The following table summarizes the minimum observational thresholds required to 
 
 | Observable | Current Constraint | Required Measurement | Detector | Timeline | Excludes |
 |------------|-------------------|---------------------|----------|----------|----------|
-| **QNM shift (Hayward)** | $L/M < 0.316$ (GW150914) | $\Delta f/f \sim 10^{-4}$ | ET/CE (100-event stack) | 2030s | $L/M \gtrsim 0.045$ |
-| **QNM shift (Hayward)** | $L/M < 0.316$ (GW150914) | $\Delta f/f \sim 10^{-3}$ | ET/CE (single event) | 2030s | $L/M \gtrsim 0.14$ |
+| **QNM shift (Hayward)** | None (see §2.5) | $\Delta f/f \sim 10^{-4}$ | ET/CE (100-event stack) | 2030s | $L/M \gtrsim 0.045$ |
+| **QNM shift (Hayward)** | None (see §2.5) | $\Delta f/f \sim 10^{-3}$ | ET/CE (single event) | 2030s | $L/M \gtrsim 0.14$ |
 | **QNM shift (Bardeen)** | None | $\Delta f/f \sim 10^{-4}$ | ET/CE (100-event) | 2030s | $e/M \gtrsim 0.027$ |
 | **QNM shift (Dymnikova)** | Unobservable | N/A | N/A | — | Exponential suppression |
 | **Tidal deformability** ✓ | $70 \lesssim \Lambda(1.4) \lesssim 580$ (GW170817) | $\Lambda$ to $\sim 1\%$ | LIGO A+ / ET | **Now** / Late 2020s | $\rho_0 \gtrsim 3\times10^{13}$ g/cm³ |
 | **Post-merger $f_2$** | None | $f_2$ to $\sim 10\%$ | ET | 2030s | $\rho_0 \gtrsim 10^{12}$ g/cm³ (stiffer EOS than SLy required) |
-| **M-R (NICER)** ✓ | $M = 2.08$, $R \approx 12.4$ km | Better $R$ precision | NICER / STROBE-X | **Now** | $\rho_0 \gtrsim 3\times10^{10}$ g/cm³ ($1\sigma$); $\gtrsim 3\times10^{11}$ g/cm³ ($2\sigma$) |
+| **M-R (NICER)** ✓ | $M = 2.08$, $R \approx 12.4$ km | Better $R$ precision | NICER / STROBE-X | **Now** | $\rho_0 \gtrsim 3\times10^{10}$–$>3\times10^{13}$ g/cm³ (1$\sigma$; EOS-dependent; SLy = $3\times10^{10}$, H4 = $3\times10^{11}$, APR4 = $1\times10^{12}$, MS1b $>3\times10^{13}$) |
 | **Echoes** | Ruled out unless horizonless | Echo SNR threshold | LIGO A+ | **Now** | Horizonless objects |
-| **Remnant DM** | $M_{\text{rem}} \lesssim 10^{18}$ g (microlensing) | Sub-lunar mass lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-14}$ m |
+| **Remnant DM** | $M_{\text{rem}} \lesssim 10^{18}$ g (microlensing) | Sub-lunar mass lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-12}$ m |
 
 **Key observation:** The tidal deformability channel is the only one that constrains the model with data that already exists. The ringdown channel is the most theoretically robust but requires next-generation detectors. The echo channel turns out to be a false lead — echoes test for horizon absence, not core regularity. The causality bound ($c_s^2 \leq 1$, 0/394 violations; see §3.5) is a theoretical consistency check, not an observational constraint, and is therefore not listed here.
 
@@ -323,16 +327,11 @@ The following table summarizes the minimum observational thresholds required to 
 
 ## 6. Open Problems
 
-1. **EOS degeneracy.** The TOV bound ranges from $\rho_0 \lesssim 3\times10^{10}$ g/cm³ ($1\sigma$ PSR mass) to $3\times10^{11}$ g/cm³ ($2\sigma$), and is SLy-conditional throughout. Marginalization over EOS priors (APR4, MS1b, H4) is required for a robust constraint.
-
-2. **Cross-metric completeness and isospectrality.** Dymnikova QNM shifts are confirmed to be $\approx 0$ (exponential suppression), but the echo-extremality coincidence should be verified numerically for Bardeen and Dymnikova. The axial–polar isospectrality splitting of 0.11% is below the leading-order WKB truncation floor; third-order Konoplya WKB or an exact numerical computation is needed to determine whether isospectrality is genuinely preserved at that level.
-
+1. **EOS degeneracy.** The TOV $\rho_0$ bound spans $3\times10^{10}$–$>3\times10^{13}$ g/cm³ depending on nuclear EOS choice ($\S$3.2). A first Bayesian marginalization (uniform prior over the four EOSs, PSR J0740+6620 likelihood) gives $\rho_0 \lesssim 1.2\times10^{13}$ g/cm³ at 1$\sigma$ — dominated by MS1b, which is itself excluded by GW170817 ($\Lambda(1.4) \approx 2400 \gg 580$). Restricting to GW170817-consistent EOSs (SLy + APR4), the marginalized bound is $\sim 8\times10^{11}$ g/cm³ — a factor of $\sim 25$ above the SLy-only conservative floor of $3\times10^{10}$ g/cm³. A definitive constraint requires a continuous EOS prior and simultaneous marginalization over NICER, GW170817, and PSR mass measurements, not four discrete EOS points.
+2. **Cross-metric completeness and isospectrality.** Dymnikova QNM shifts are confirmed to be $\approx 0$ (exponential suppression), but the echo-extremality coincidence should be verified numerically for Bardeen and Dymnikova. The axial–polar isospectrality splitting of 0.11% is below the leading-order WKB truncation floor; third-order Konoplya WKB or an exact numerical computation is needed to determine whether isospectrality is genuinely preserved at that level. The Zerilli potential extension to non-vacuum backgrounds must be derived from first principles before isospectrality claims can be made; the current substitution of $m_{\rm eff}(r)$ for the constant $M$ in the Schwarzschild formula is an ansatz whose validity has not been independently verified.
 3. **Full Kerr.** The slow-rotation WKB expansion is invalid at $a/M \sim 0.67$: the Lense-Thirring coupling is $\mathcal{O}(1)$ relative to the static potential peak, causing the first-order code to give unphysical spin-split frequencies (factor of $\sim 1.7\times$ from exact Kerr values). Teukolsky-equation solutions on the Hayward background are required for any spin-dependent result.
-
 4. **Core formation.** No dynamical mechanism is provided. Gravitational collapse producing a regular core rather than a singularity remains an open problem.
-
 5. **Stability.** The causality check is necessary but not sufficient. The Hayward metric's stability under non-spherical perturbations is unanalyzed.
-
 6. **$L$ remains a free parameter.** The analysis constrains $L$ from data but does not predict it. Connecting $L$ to a fundamental scale (Planck, QCD, electroweak) requires a microphysical theory that this paper does not provide.
 
 ---

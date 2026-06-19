@@ -26,32 +26,223 @@ Gc2 = G / c**2       # cm/g  — converts mass to length
 Gc4 = G / c**4       # cm·s²/g — converts pressure/energy density to cm^{-2}
 
 # =========================================================================
-# Piecewise polytrope EOS — SLy fit (Read et al. 2009, PRD 79, 124032)
+# Piecewise polytropes — Read et al. 2009, PRD 79, 124032, Table II
 # =========================================================================
-# Gamma values: crust (SLy unified crust, Γ~1.35), core softened in 3 pieces
-# Segment boundaries at nuclear saturation and characteristic stiffening densities.
-
-# Transition densities (g/cm^3)
+# Segment boundaries (g/cm^3); same for all EOS in the Read parameterisation.
+# =========================================================================
 RHO_CRUST_CORE = 2.4e14   # crust → core ~ nuclear saturation
 RHO_DIV1       = 5.0e14   # core stiff → intermediate
 RHO_DIV2       = 1.0e15   # intermediate → soft
 
-# Polytropic indices
-GAMMA_CRUST = 1.357        # SLy crust (Douchin-Haensel 2001)
-GAMMA_CORE1 = 3.005        # SLy inner core — stiff (Read+2009 Γ₁)
-GAMMA_CORE2 = 2.988        # intermediate (Read+2009 Γ₂)
-GAMMA_CORE3 = 2.851        # soft tail     (Read+2009 Γ₃)
+# -------------------------------------------------------------------------
+# EOS parameter table — K_CORE1 is calibrated for each EOS to reproduce
+# the tabulated M_max (Read et al. Table II).
+# -------------------------------------------------------------------------
+EOS_PARAMS = {
+    'sly': {
+        'label':        'SLy',
+        'gamma_crust':  1.357,
+        'gamma_1':      3.005,
+        'gamma_2':      2.988,
+        'gamma_3':      2.851,
+        'K1_target':    2.1098e-10, # calibrated → M_max = 2.050 M⊙ (refined)
+        'M_max_lit':    2.05,       # Read et al. Table II
+        'ref':          'Read+2009 (Douchin-Haensel 2001 SLy)',
+    },
+    'apr4': {
+        'label':        'APR4',
+        'gamma_crust':  1.357,
+        'gamma_1':      2.830,
+        'gamma_2':      3.445,
+        'gamma_3':      3.348,
+        'K1_target':    8.3104e-08, # calibrated → M_max = 2.200 M⊙ (refined)
+        'M_max_lit':    2.20,       # Read et al. Table II
+        'ref':          'Read+2009 (Akmal-Pandharipande-Ravenhall APR4)',
+    },
+    'ms1b': {
+        'label':        'MS1b',
+        'gamma_crust':  1.357,
+        'gamma_1':      3.456,
+        'gamma_2':      3.011,
+        'gamma_3':      1.425,
+        'K1_target':    1.5115e-16, # calibrated → M_max = 2.801 M⊙ (refined; piecewise approx limit)
+        'M_max_lit':    2.76,       # Read et al. Table II
+        'ref':          'Read+2009 (Müller-Serot MS1b)',
+    },
+    'h4': {
+        'label':        'H4',
+        'gamma_crust':  1.357,
+        'gamma_1':      2.909,
+        'gamma_2':      2.246,
+        'gamma_3':      2.144,
+        'K1_target':    8.4944e-09, # calibrated → M_max = 2.029 M⊙ (refined)
+        'M_max_lit':    2.03,       # Read et al. Table II
+        'ref':          'Read+2009 (Lackey-Nayyar-Owen H4)',
+    },
+}
 
-# Core K calibrated: pure (no χ-sector) M_max ≈ 2.05 Msun  (SLy EOS prediction)
-K_CORE1 = 2.18e-10
+# Active EOS — swapped by setup_eos()
+EOS_NAME = 'sly'
+_EOS = EOS_PARAMS[EOS_NAME]
 
-# Continuity conditions: p_i(RHO_j) = p_j(RHO_j)
-P_CC = K_CORE1 * RHO_CRUST_CORE**GAMMA_CORE1       # p at crust-core boundary
-K_CRUST = P_CC / (RHO_CRUST_CORE**GAMMA_CRUST)      # K for crust segment
-P_DIV1  = K_CORE1 * RHO_DIV1**GAMMA_CORE1            # p at first divider
-K_CORE2 = P_DIV1 / (RHO_DIV1**GAMMA_CORE2)           # K for core seg 2
-P_DIV2  = K_CORE2 * RHO_DIV2**GAMMA_CORE2            # p at second divider
-K_CORE3 = P_DIV2 / (RHO_DIV2**GAMMA_CORE3)           # K for core seg 3
+# Pre-computed globals (populated by setup_eos)
+GAMMA_CRUST = GAMMA_CORE1 = GAMMA_CORE2 = GAMMA_CORE3 = 1.0
+K_CRUST = K_CORE1 = K_CORE2 = K_CORE3 = 1.0
+P_CC = P_DIV1 = P_DIV2 = 0.0
+
+
+def setup_eos(eos_name='sly', tune_K1=False, n_points_mmax=4000):
+    """Select EOS and (optionally) auto-calibrate K_CORE1 to hit M_max_lit.
+
+    Setting tune_K1=True runs a binary search on K_CORE1 so that the
+    pure-EOS M_max matches the literature target within 0.005 M⊙.
+    Side-effect: updates the global EOS_PARAMS entry.
+    """
+    global EOS_NAME, _EOS
+    global GAMMA_CRUST, GAMMA_CORE1, GAMMA_CORE2, GAMMA_CORE3
+    global K_CORE1, K_CRUST, K_CORE2, K_CORE3
+    global P_CC, P_DIV1, P_DIV2
+
+    eos_name = eos_name.lower()
+    if eos_name not in EOS_PARAMS:
+        raise ValueError(f"Unknown EOS: {eos_name}. Choices: {list(EOS_PARAMS.keys())}")
+    EOS_NAME = eos_name
+    _EOS = EOS_PARAMS[eos_name]
+
+    GAMMA_CRUST = _EOS['gamma_crust']
+    GAMMA_CORE1 = _EOS['gamma_1']
+    GAMMA_CORE2 = _EOS['gamma_2']
+    GAMMA_CORE3 = _EOS['gamma_3']
+    K_CORE1 = _EOS['K1_target']
+
+    if tune_K1:
+        target = _EOS['M_max_lit']
+        print(f"  Auto-calibrating K_CORE1 for {_EOS['label']} -> M_max ~ {target:.2f} Msun ...")
+        # Phase 1: Binary search on log10(K1) with coarse grid (fast)
+        lo, hi = -18.0, -5.0
+        for _ in range(16):
+            mid = 0.5 * (lo + hi)
+            K_CORE1 = 10.0 ** mid
+            _setup_continuity()
+            mm = _pure_mmax_quick(n_points_mmax, refine=False)
+            if mm is None or mm < target:
+                lo = mid
+            else:
+                hi = mid
+        # Phase 2: Refine with golden-section (slower but accurate)
+        lo, hi = lo - 0.5, hi + 0.5  # widen range for safety
+        for _ in range(10):
+            mid = 0.5 * (lo + hi)
+            K_CORE1 = 10.0 ** mid
+            _setup_continuity()
+            mm = _pure_mmax_quick(n_points_mmax, refine=True)
+            if mm is None or mm < target:
+                lo = mid
+            else:
+                hi = mid
+        K_CORE1 = 10.0 ** (0.5 * (lo + hi))
+        EOS_PARAMS[eos_name]['K1_target'] = K_CORE1
+        _EOS['K1_target'] = K_CORE1
+        # Final verified check
+        _setup_continuity()
+        mm_final = _pure_mmax_quick(n_points_mmax, refine=True)
+        print(f"    K_CORE1 = {K_CORE1:.4e} -> M_max = {mm_final:.3f} Msun")
+
+    _setup_continuity()
+    print(f"  EOS: {_EOS['label']}  ({_EOS['ref']})")
+    print(f"    K_CORE1 = {K_CORE1:.4e}")
+
+
+def _setup_continuity():
+    """Recompute K_CRUST, K_CORE2, K_CORE3 from K_CORE1 and the Gamma chain."""
+    global K_CRUST, K_CORE2, K_CORE3
+    global P_CC, P_DIV1, P_DIV2
+    P_CC   = K_CORE1 * RHO_CRUST_CORE ** GAMMA_CORE1
+    K_CRUST = P_CC / (RHO_CRUST_CORE ** GAMMA_CRUST)
+    P_DIV1 = K_CORE1 * RHO_DIV1 ** GAMMA_CORE1
+    K_CORE2 = P_DIV1 / (RHO_DIV1 ** GAMMA_CORE2)
+    P_DIV2 = K_CORE2 * RHO_DIV2 ** GAMMA_CORE2
+    K_CORE3 = P_DIV2 / (RHO_DIV2 ** GAMMA_CORE3)
+
+
+def _golden_section_mmax(log10_pc_best, rho0_cgs=0.0, r_c_km=2.0, n=2,
+                         n_points=4000, tol_log10=1e-3):
+    """Refine M_max via golden-section search on log10(p_c).
+
+    Parameters
+    ----------
+    log10_pc_best : float
+        log10 of the best p_c from a coarse grid scan.
+    Returns (M_max, log10_pc_opt) or (None, None) on failure.
+    """
+    phi = (np.sqrt(5) - 1) / 2  # golden ratio conjugate, ~0.618
+    a = log10_pc_best - 0.30  # factor ~0.5 in p_c
+    c = log10_pc_best + 0.30  # factor ~2.0 in p_c
+    b = c - phi * (c - a)
+    d = a + phi * (c - a)
+
+    # Evaluate initial test points
+    def _eval(lp):
+        sol = solve_tov_tidal_nosweep(10**lp, rho0_cgs, r_c_km, n, n_points=n_points)
+        return sol['M_Msun'] if sol else 0.0
+
+    Mb = _eval(b)
+    Md = _eval(d)
+
+    max_iter = 40
+    for _ in range(max_iter):
+        if Mb > Md:
+            c, d = d, b
+            Md = Mb
+            b = c - phi * (c - a)
+            Mb = _eval(b)
+        else:
+            a, b = b, d
+            Mb = Md
+            d = a + phi * (c - a)
+            Md = _eval(d)
+
+        if abs(c - a) < tol_log10:
+            break
+
+    # Best point is at the bracket midpoint
+    log10_mid = 0.5 * (a + c)
+    M_best = _eval(log10_mid)
+    return (M_best, log10_mid) if M_best > 0 else (None, None)
+
+
+def _pure_mmax_quick(n_points, refine=True):
+    """M_max for pure-EOS calibration — coarse grid + optional golden-section refinement."""
+    # Coarse grid scan
+    p_c_vals = np.logspace(34.3, 37.8, 30)
+    best = 0.0
+    best_log10 = 34.3
+    for p_c in p_c_vals:
+        sol = solve_tov_tidal_nosweep(p_c, rho0_cgs=0.0, r_c_km=2.0, n=2,
+                                       n_points=n_points)
+        if sol and sol['M_Msun'] > best:
+            best = sol['M_Msun']
+            best_log10 = np.log10(p_c)
+
+    if best <= 0 or not refine:
+        return best if best > 0 else None
+
+    # Golden-section refinement
+    M_refined, _ = _golden_section_mmax(best_log10, rho0_cgs=0.0, r_c_km=2.0,
+                                         n=2, n_points=n_points)
+    return M_refined if M_refined else best
+
+
+def solve_tov_tidal_nosweep(p_c_cgs, rho0_cgs, r_c_km, n=2,
+                             w_chi_inf=0.0, r_max_km=200.0, n_points=4000):
+    """Single-integration wrapper — same as solve_tov_tidal but returns None
+    on BH gracefully (used for calibration sweeps)."""
+    try:
+        return solve_tov_tidal(p_c_cgs, rho0_cgs, r_c_km, n,
+                                w_chi_inf=w_chi_inf, r_max_km=r_max_km,
+                                n_points=n_points)
+    except Exception:
+        return None
 
 
 def eos_rho_from_p(p):
@@ -503,7 +694,7 @@ def plot_tidal_results(results, output_path='tov_tidal_plot.png'):
     ax.axvline(1.4, color='gray', linestyle=':', alpha=0.5)
     ax.set_xlabel('Mass (Msun)')
     ax.set_ylabel('Lambda')
-    ax.set_title('Tidal deformability: chi-sector compact objects')
+    ax.set_title(f'Tidal deformability: chi-sector — EOS: {EOS_PARAMS[EOS_NAME]["label"]}')
     ax.legend(fontsize=6, loc='upper right')
     ax.grid(True, alpha=0.3)
     ax.set_xlim(0.8, 2.2)
@@ -533,7 +724,7 @@ def plot_tidal_results(results, output_path='tov_tidal_plot.png'):
                label='GW170817 bound')
     ax.set_xlabel('rho0 (g/cm^3)')
     ax.set_ylabel('Lambda(1.4 Msun)')
-    ax.set_title('Lambda(1.4) vs chi-sector density')
+    ax.set_title(f'Lambda(1.4) vs chi-sector density — EOS: {EOS_PARAMS[EOS_NAME]["label"]}')
     ax.set_xscale('log')
     ax.legend(fontsize=7)
     ax.grid(True, alpha=0.3)
@@ -606,10 +797,17 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument('--workers', type=int, default=16)
     ap.add_argument('--n-pts', type=int, default=4000)
+    ap.add_argument('--eos', type=str, default='sly',
+                    choices=['sly', 'apr4', 'ms1b', 'h4'],
+                    help='Nuclear EOS (default: sly)')
+    ap.add_argument('--tune', action='store_true',
+                    help='Auto-calibrate K_CORE1 to hit literature M_max')
     args = ap.parse_args()
 
+    setup_eos(args.eos, tune_K1=args.tune)
+
     print("=" * 60)
-    print("TOV + tidal deformability: chi-sector compact objects")
+    print(f"TOV + tidal deformability: chi-sector — EOS: {_EOS['label']}")
     print("=" * 60)
 
     # Parameter sweep — focused on rho0 range where Lambda changes
@@ -626,7 +824,7 @@ def main():
     if results:
         fields = ['p_c_cgs', 'rho0_gcm3', 'r_c_km', 'n', 'M_Msun', 'R_km',
                   'C', 'y_R', 'k2', 'Lambda', 'cs2_max', 'success', 'at_boundary']
-        with open('tov_tidal_results.csv', 'w', newline='') as f:
+        with open(f'tov_tidal_results_{args.eos}.csv', 'w', newline='') as f:
             w = csv.DictWriter(f, fieldnames=fields)
             w.writeheader()
             w.writerows([{k: r[k] for k in fields} for r in results])
@@ -653,7 +851,7 @@ def main():
                           f"Lambda(1.4)={lam14:.1f}  {flag}")
 
     # Plot
-    plot_tidal_results(results)
+    plot_tidal_results(results, output_path=f'tov_tidal_plot_{args.eos}.png')
 
 
 if __name__ == '__main__':
