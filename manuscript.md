@@ -112,23 +112,26 @@ The underlying physics generalizes beyond Hayward: the tortoise integral $\int d
 
 ### 2.4 EOS Robustness
 
-The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. The EOS enters only through the mass function. Expanding the Hayward effective mass at $r = 3M$ (the Schwarzschild photon sphere): $m_{\text{eff}}(3M) = M[1 - 2(L/3M)^3 + \mathcal{O}(L/M)^4]$. An EOS-induced mass correction $\delta m_{\text{EOS}}$ at the same $r$ is bounded by the core density profile at the photon sphere, which for a neutron-star-like core of extent $r_c \ll 3M$ is $\delta m_{\text{EOS}}/M \lesssim (r_c/3M)^3(\rho_0/\rho_{\text{nuc}}) \ll (L/M)^3$. The ratio of EOS-induced to Hayward mass deviation is
+The QNM shift is driven by $m_{\text{eff}}(r) \neq M$ at the photon sphere. Expanding the Hayward effective mass at $r = 3M$ (the Schwarzschild photon sphere, which shifts by $<1\%$ for $L/M \leq 0.3$):
 
 $$
-\frac{|\delta m_{\text{EOS}}|}{|\delta m_{\text{Hayward}}|} \lesssim \frac{L}{2M}.
+m_{\text{eff}}(3M) = \frac{M}{1 + \frac{2}{27}(L/M)^2} = M\!\left[1 - \frac{2}{27}\!\left(\frac{L}{M}\right)^{\!2} + \mathcal{O}(L/M)^4\right].
 $$
 
-| $L/M$ | Max EOS correction to shift |
-|-------|---------------------------|
-| 0.05 | $\sim 2.5\%$ |
-| 0.10 | $\sim 5\%$ |
-| 0.30 | $\sim 15\%$ |
+The fractional deviation is $|\delta m|/M = (2/27)(L/M)^2$. How sensitive is this to the equation of state? The Hayward metric assumes $p = -\rho$ everywhere — a specific (and exotic) stress-energy tensor. A realistic nuclear EOS would modify the mass function at the photon sphere by an amount bounded by the core's total gravitational mass. For a core of extent $r_c \ll 3M$, $\delta m_{\text{EOS}}/M \lesssim (r_c/3M)^3(\rho_0/\rho_{\text{nuc}}) \sim 10^{-5}$ for the SLy-allowed $\rho_0 \lesssim 3\times10^{10}$ g/cm³, rising to $\sim 10^{-3}$ for the least restrictive bound (MS1b, $\rho_0 \lesssim 3\times10^{13}$ g/cm³).
 
-The Hayward-based QNM predictions are robust at the few-percent level for observationally relevant $L/M$. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics.
+| $L/M$ | $|\delta m_{\text{Hayward}}|/M$ | Max EOS $|\delta m|/M$ | EOS correction to shift |
+|-------|-------------------------------|------------------------|------------------------|
+| 0.01  | $7.4 \times 10^{-6}$ | $\lesssim 10^{-3}$ | EOS-dominated (shift unobservable) |
+| 0.05  | $1.9 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 5\%$ |
+| 0.10  | $7.4 \times 10^{-4}$ | $\lesssim 10^{-3}$ | $\lesssim 1\%$ |
+| 0.30  | $6.7 \times 10^{-3}$ | $\lesssim 10^{-3}$ | $\lesssim 0.2\%$ |
+
+The Hayward-based QNM predictions are robust at the sub-percent level for observationally relevant $L/M \gtrsim 0.05$. At very small $L/M \lesssim 0.01$ (where the shift itself is $\lesssim 5\times10^{-5}$ and unobservable), EOS uncertainties dominate. A measured shift constrains $L$ with only weak dependence on the unknown core microphysics for $L/M \gtrsim 0.05$.
 
 ### 2.5 Spin and GW150914
 
-Every LIGO/Virgo/KAGRA remnant is spinning. We implemented a Lense-Thirring frame-dragging correction linear in $a/M$ for the Hayward background (Hartle-Thorne formalism). However, for GW150914 ($a/M \approx 0.67$, $M = 62\,M_\odot$ [5]) the expansion breaks down: the Lense-Thirring coupling at the photon sphere ($\approx 0.15$ in geometric units) is comparable to the static potential peak ($V_0 \approx 0.14$), placing the system deep in the non-perturbative regime. The resulting spin-split frequencies are artefacts of solving the wrong (linear-in-$a$) equation — they differ from exact Kerr QNM values by a factor of $\sim 1.7\times$ [BCStab].
+Every LIGO/Virgo/KAGRA remnant is spinning. We implemented a Lense-Thirring frame-dragging correction linear in $a/M$ for the Hayward background (Hartle-Thorne formalism). However, for GW150914 ($a/M \approx 0.67$, $M = 62\,M_\odot$ [5]) the expansion breaks down: the Lense-Thirring coupling at the photon sphere ($\approx 0.15$ in geometric units) is comparable to the static potential peak ($V_0 \approx 0.14$), placing the system deep in the non-perturbative regime. The resulting spin-split frequencies are artefacts of solving the wrong (linear-in-$a$) equation — they differ from exact Kerr QNM values by a factor of $\sim 1.7\times$ [13].
 
 We therefore do **not** report spin-dependent QNM shifts. The reliable result is the static one:
 
@@ -136,7 +139,7 @@ We therefore do **not** report spin-dependent QNM shifts. The reliable result is
 - GW150914 ringdown precision is $\sim 10\%$ (the 20% dominant-mode constraint from Isi et al. 2019, PRL 123, 111102; 10% is attainable with stacked higher modes).
 - **Conclusion:** GW150914 cannot constrain $L/M$ — the core shift is two orders of magnitude below threshold.
 
-Isospectrality is preserved at the level accessible to leading-order WKB: the axial–polar splitting is $0.11\%$, below the method's own truncation error ($\sim 4\%$ absolute offset: WKB gives 208 Hz vs exact Schwarzschild 195 Hz). This splitting is a WKB artefact, not a physical signal. The Zerilli extension used here substitutes $m_{\rm eff}(r)$ for the constant $M$ in the standard Schwarzschild formula; a rigorous derivation from the perturbed stress-energy tensor has not been performed. The 0.11% splitting is therefore best interpreted as an upper bound on any genuine isospectrality violation, not as a physical prediction. We report an upper bound: $|f_{\rm polar} - f_{\rm axial}|/f < 0.12\%$ (static, subject to WKB systematics).
+Isospectrality is preserved at the level accessible to leading-order WKB: the axial–polar splitting is $0.11\%$, below the method's own truncation error ($\sim 7\%$ absolute offset: WKB gives 208 Hz vs exact Schwarzschild 195 Hz). This splitting is a WKB artefact, not a physical signal. The Zerilli extension used here substitutes $m_{\rm eff}(r)$ for the constant $M$ in the standard Schwarzschild formula; a rigorous derivation from the perturbed stress-energy tensor has not been performed. The 0.11% splitting is therefore best interpreted as an upper bound on any genuine isospectrality violation, not as a physical prediction. We report an upper bound: $|f_{\rm polar} - f_{\rm axial}|/f < 0.12\%$ (static, subject to WKB systematics).
 
 Future detectability of the static Hayward shift:
 
@@ -183,15 +186,15 @@ parameterized by central density $\rho_0$, core radius $r_c$, and steepness $n$.
 
 | $\rho_0$ (g/cm³) | $M_{\max}$ ($M_\odot$) | NICER status |
 |---|---|---|
-| $10^{10}$ | 2.027 | Allowed |
-| $3 \times 10^{10}$ | 2.026 | Allowed |
-| $10^{11}$ | 2.002 | **Excluded at $1\sigma$** ($M < 2.01\,M_\odot$) |
-| $3 \times 10^{11}$ | 1.975 | Excluded |
-| $10^{12}$ | 1.941 | Excluded |
-| $3 \times 10^{12}$ | 1.890 | Excluded |
-| $10^{13}$ | 1.820 | Excluded |
+| $10^{10}$ | 2.024 | Allowed |
+| $3 \times 10^{10}$ | 2.012 | Allowed (marginal: $M_{\max}$ within $0.002\,M_\odot$ of threshold) |
+| $10^{11}$ | 1.994 | **Excluded at $1\sigma$** ($M < 2.01\,M_\odot$) |
+| $3 \times 10^{11}$ | 1.972 | Excluded |
+| $10^{12}$ | 1.937 | Excluded |
+| $3 \times 10^{12}$ | 1.892 | Excluded |
+| $10^{13}$ | 1.788 | Excluded |
 
-The inferred constraint depends on confidence level. At **$1\sigma$** ($M_{\rm max} > 2.01\,M_\odot$): $\boxed{\rho_0 \lesssim 3\times10^{10}\ \text{g/cm}^3}$. At **$2\sigma$** ($M_{\rm max} > 1.94\,M_\odot$): $\rho_0 \lesssim 3\times10^{11}\ \text{g/cm}^3$. Both bounds are three orders of magnitude below nuclear saturation density ($\rho_{\rm nuc} \approx 2.3\times10^{14}$ g/cm³). Both are SLy-specific; stiffer EOS choices (APR4, MS1b) would relax them. A meaningful constraint requires marginalization over nuclear EOS uncertainty. The $M_{\max} = 2.050\,M_\odot$ pure-SLy value is consistent with the PSR J0740+6620 mass measurement ($2.08 \pm 0.07\,M_\odot$ [7,9]) and the GW170817 tidal deformation measurement [9,14].
+The inferred constraint depends on confidence level. At **$1\sigma$** ($M_{\rm max} > 2.01\,M_\odot$): $\boxed{\rho_0 \lesssim 3\times10^{10}\ \text{g/cm}^3}$ (the $3\times10^{10}$ configuration yields $M_{\max}=2.012\,M_\odot$, only $0.002\,M_\odot$ above threshold). At **$2\sigma$** ($M_{\rm max} > 1.94\,M_\odot$): $\rho_0 \lesssim 3\times10^{11}\ \text{g/cm}^3$. Both bounds are three orders of magnitude below nuclear saturation density ($\rho_{\rm nuc} \approx 2.3\times10^{14}$ g/cm³). Both are SLy-specific; stiffer EOS choices (APR4, MS1b) would relax them. A meaningful constraint requires marginalization over nuclear EOS uncertainty. The $M_{\max} = 2.050\,M_\odot$ pure-SLy value is consistent with the PSR J0740+6620 mass measurement ($2.08 \pm 0.07\,M_\odot$ [7,9]) and the GW170817 tidal deformation measurement [9,14].
 
 **Multi-EOS comparison.** To quantify the EOS dependence, we repeat the M_max scan for four nuclear equations of state from Read et al. [6]: SLy, H4, APR4, and MS1b. Each is implemented as a piecewise polytrope with the Read et al. adiabatic indices $\Gamma_i$; $K_{\rm CORE1}$ is calibrated to reproduce the literature M_max via two-phase binary search (coarse grid followed by golden-section refinement). The calibrated values are: SLy $K_1 = 2.11\times10^{-10}$, H4 $K_1 = 8.49\times10^{-9}$, APR4 $K_1 = 8.31\times10^{-8}$, MS1b $K_1 = 1.51\times10^{-16}$ (all cgs). Using the same adaptive p_c grid ($10^{33}$–$10^{37.5}$ dyne/cm², 80 points) and $\chi$-sector parameters ($r_c = 2$ km, $n=2$) throughout:
 
