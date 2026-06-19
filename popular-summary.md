@@ -55,8 +55,8 @@ But next-generation detectors can. The Einstein Telescope and Cosmic Explorer, e
 Using the SLy equation of state — a standard nuclear-physics model calibrated to laboratory data — the computer ran 394 different star configurations with varying core densities, sizes, and central pressures. The results:
 
 - **Pure SLy matter** produces a maximum neutron star mass of 2.05 solar masses, consistent with the heaviest known pulsar (PSR J0740+6620, at $2.08 \pm 0.07$).
-- **Add even a trace of the hidden core** — central density above $3 \times 10^{11}$ g/cm³, about one-thousandth of nuclear density — and the maximum mass drops below the observed pulsar mass, **ruling out that core density at 1-sigma confidence**.
-- **The tidal deformability $\Lambda$** — how much the neutron star stretches — drops dramatically: from 557 (pure SLy) to as low as 54 for a dense core. GW170817 already restricts $\Lambda$ at 1.4 solar masses to the range 70–580. The lower bound excludes core densities above $3 \times 10^{13}$ g/cm³, complementing the NICER mass constraint at a different density scale.
+- **Add even a trace of the hidden core** — central density above $3 \times 10^{10}$ g/cm³, about one ten-thousandth of nuclear density — and the maximum mass drops below the observed pulsar mass, **ruling out that core density at 1-sigma confidence** (SLy EOS, the most conservative bound).
+- **The tidal deformability $\Lambda$** — how much the neutron star stretches — drops dramatically: from 531 (pure SLy) to as low as 52 for a dense core. GW170817 already restricts $\Lambda$ at 1.4 solar masses to the range 70–580. The lower bound excludes core densities above $3 \times 10^{13}$ g/cm³, complementing the NICER mass constraint at a different density scale.
 
 A measurement of $\Lambda$ below roughly 200 for a 1.4-solar-mass neutron star whose companion exceeds 2.0 solar masses would be unexplained by any standard nuclear equation of state — but would be a **natural prediction** of the hidden-core model. This is a falsifiable claim using data that either exists or will exist within the decade.
 
@@ -84,7 +84,7 @@ The remnant mass can be calculated exactly: $M_{\rm remnant} \approx 1.3\,L$. Wh
 
 - If $L$ is the **Planck length** ($10^{-35}$ m): the remnant is a Planck-scale speck — the standard, unexciting expectation.
 - If $L$ is the **QCD scale** ($10^{-15}$ m, roughly the size of a proton): the remnant weighs about $10^{15}$ grams — **squarely in the mass range where primordial black holes could be the dark matter.**
-- If $L$ is any larger: existing microlensing surveys would already have seen the remnants. Data from EROS, OGLE, and MACHO push the remnant mass below $10^{18}$ g, corresponding to $L$ below $10^{-14}$ m.
+- If $L$ is any larger than nuclear scale: existing microlensing surveys would already have seen the remnants. Data from EROS, OGLE, and MACHO push the remnant mass below $10^{18}$ g, corresponding to $L$ below $10^{-12}$ m. Future sub-lunar lensing with LSST/Roman could probe $L \gtrsim 10^{-14}$ m — approaching the electroweak scale.
 
 This is the single most provocative number in the entire analysis: a direct, calculable bridge between regular black hole physics and the dark matter problem, requiring no additional assumptions beyond Hawking's evaporation formalism and the existence of a regular core.
 
@@ -102,7 +102,7 @@ The analysis provides something rare in theoretical physics: a concrete table of
 | **Post-merger $f_2$** | No measurement | $f_2$ to 10% | ET | 2030s | $\rho_0 \gtrsim 10^{12}$ g/cm³ (stiffer EOS needed) |
 | **Neutron star mass** ✓ | $M > 2.08\,M_\odot$ | Better radius | NICER / STROBE-X | **Now** | $\rho_0 \gtrsim 3\times10^{10}$ g/cm³ (1σ) |
 | **Echoes** | Ruled out unless horizonless | SNR threshold | LIGO A+ | **Now** | Horizonless objects |
-| **Remnant dark matter** | $M_{\rm rem} < 10^{18}$ g | Sub-lunar lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-14}$ m |
+| **Remnant dark matter** | $M_{\rm rem} < 10^{18}$ g | Sub-lunar lensing | LSST / Roman | Late 2020s | $L \gtrsim 10^{-12}$ m |
 | **Causality** ✓ | $c_s^2 \leq 1$ (0/394 violations) | N/A | Theory | **Now** | Model is internally consistent |
 
 **The tidal channel is the only one actively constraining the model right now.** The ringdown channel is the most theoretically robust but awaits next-generation detectors. The echo channel turns out to be a false lead — it tests for horizon absence, not core regularity.
